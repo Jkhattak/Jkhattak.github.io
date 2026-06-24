@@ -11,16 +11,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #0d0f14;
-      --bg-card:      #161b22;
-      --bg-2:         #1c2128;
-      --border:       #21262d;
-      --border-h:     #30363d;
-      --text:         #c9d1d9;
-      --text-dim:     #8b949e;
-      --text-bright:  #f0f6fc;
-      --accent:       #58a6ff;
-      --accent-dim:   #1f6feb;
+      /* Charcoal green-tint terminal palette */
+      --bg:           #0e1210;
+      --bg-card:      #151a16;
+      --bg-2:         #1a211b;
+      --border:       #1f2b21;
+      --border-h:     #2a3d2c;
+      --text:         #cdd8ce;
+      --text-dim:     #7d9480;
+      --text-bright:  #eef5ef;
+      --accent:       #4ade80;
+      --accent-dim:   #16a34a;
+      --accent-glow:  #22c55e;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
       --radius: 14px;
@@ -39,6 +41,9 @@
       min-height: 100vh;
     }
 
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
     .layout {
       display: flex;
       gap: 24px;
@@ -46,9 +51,11 @@
       margin: 0 auto;
       padding: 40px 20px;
       align-items: flex-start;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Sidebar */
+    /* ── Sidebar ── */
     .sidebar {
       width: var(--sidebar-w);
       flex-shrink: 0;
@@ -190,9 +197,9 @@
       justify-content: center;
     }
 
-    .resume-download:hover { background: #388bfd; text-decoration: none; color: #fff; }
+    .resume-download:hover { background: var(--accent-glow); text-decoration: none; color: #fff; }
 
-    /* Main */
+    /* ── Main ── */
     .main { flex: 1; min-width: 0; }
 
     .tab-nav {
@@ -236,120 +243,28 @@
       border-bottom: 0.5px solid var(--border);
     }
 
-    /* About */
+    /* ── About & Resume combined ── */
     .about-bio {
       font-size: 14px;
       color: var(--text-dim);
-      line-height: 1.9;
-      margin-bottom: 32px;
+      line-height: 1.85;
+      margin-bottom: 36px;
     }
 
     .about-bio strong { color: var(--text); font-weight: 500; }
 
-    .subsection-title {
+    .resume-section { margin-bottom: 36px; }
+
+    .resume-section-title {
       font-family: var(--mono);
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 18px;
-    }
-
-    /* What I do — linear list */
-    .doing-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-bottom: 36px;
-    }
-
-    .doing-item {
-      display: flex;
-      gap: 18px;
-      padding: 16px 0;
-      border-bottom: 0.5px solid var(--border);
-      align-items: flex-start;
-    }
-
-    .doing-item:first-child { border-top: 0.5px solid var(--border); }
-
-    .doing-num {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent);
-      flex-shrink: 0;
-      width: 24px;
-      margin-top: 1px;
-    }
-
-    .doing-content { flex: 1; }
-
-    .doing-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-bright);
-      margin-bottom: 4px;
-    }
-
-    .doing-desc {
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
-
-    /* Skills inline */
-    .skills-grid-inline {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 8px;
-    }
-
-    .skill-item {}
-
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .skill-name {
-      font-size: 13px;
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .skill-pct {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent);
-    }
-
-    .skill-bar {
-      height: 3px;
-      background: var(--border-h);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: var(--accent-dim);
-      border-radius: 4px;
-    }
-
-    /* Resume */
-    .resume-section { margin-bottom: 36px; }
-
-    .resume-section-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
       margin-bottom: 20px;
     }
 
+    /* Timeline */
     .timeline { display: flex; flex-direction: column; }
 
     .timeline-item {
@@ -412,7 +327,76 @@
       line-height: 1.7;
     }
 
-    /* Portfolio */
+    .timeline-bullets {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timeline-bullet {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .timeline-bullet::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .courses-pills {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .course-pill {
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* Skill rows */
+    .skill-rows { display: flex; flex-direction: column; }
+
+    .skill-row-item {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 0.5px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .skill-row-item:first-child { border-top: 0.5px solid var(--border); }
+
+    .skill-row-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      min-width: 170px;
+    }
+
+    .skill-row-vals {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── Portfolio ── */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -479,7 +463,7 @@
       color: var(--accent);
     }
 
-    /* Papers */
+    /* ── Papers ── */
     .papers-list { display: flex; flex-direction: column; gap: 14px; }
 
     .paper-row {
@@ -512,37 +496,7 @@
 
     .paper-meta a { color: var(--accent); }
 
-    /* Skill rows */
-    .skill-rows { display: flex; flex-direction: column; gap: 0; }
-
-    .skill-row-item {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      padding: 11px 0;
-      border-bottom: 0.5px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .skill-row-item:first-child { border-top: 0.5px solid var(--border); }
-
-    .skill-row-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      flex-shrink: 0;
-      min-width: 160px;
-    }
-
-    .skill-row-vals {
-      font-size: 13px;
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    /* Neural canvas */
+    /* ── Neural canvas ── */
     #neural-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -551,8 +505,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
-    .layout { position: relative; z-index: 1; }
 
     @media (max-width: 768px) {
       .layout { flex-direction: column; padding: 16px; }
@@ -632,74 +584,24 @@
   <main class="main">
 
     <nav class="tab-nav">
-      <button class="tab-btn active" onclick="showTab('about', this)">About</button>
-      <button class="tab-btn" onclick="showTab('resume', this)">Resume</button>
+      <button class="tab-btn active" onclick="showTab('about', this)">About &amp; Resume</button>
       <button class="tab-btn" onclick="showTab('portfolio', this)">Projects</button>
       <button class="tab-btn" onclick="showTab('papers', this)">Papers</button>
     </nav>
 
-    <!-- About -->
+    <!-- About & Resume -->
     <div id="panel-about" class="panel active">
       <h2 class="panel-title">About Me</h2>
 
       <p class="about-bio">
         I'm a data analyst at <strong>Public Interest Registry</strong>, the nonprofit behind .org.
-        My work tends to span well beyond the title. I've built and deployed a domain renewal
-        prediction model using XGBoost that runs on a monthly production cadence, built a nonprofit
-        database from scratch using Lambda functions, web scraping, and Snowflake pipelines, and
-        done work on registrant behavior to understand who is actually buying domains and why.
-        Currently building a Claude MCP integration for Tableau. Finishing an
-        <strong>MS in Computer Science at Georgia Tech</strong>, concentrating in machine learning.
+        My work spans production ML models, data pipelines, and behavioral analytics. I focus on
+        building things end to end — training models, deploying them on a cadence, and connecting
+        data to decisions. Currently finishing an <strong>MS in Computer Science at Georgia Tech</strong>,
+        concentrating in machine learning.
       </p>
 
-      <div class="subsection-title" style="margin-bottom:18px;">// what I do</div>
-      <div class="doing-list" style="margin-bottom:36px;">
-        <div class="doing-item">
-          <span class="doing-num">01</span>
-          <div class="doing-content">
-            <div class="doing-title">Machine Learning</div>
-            <div class="doing-desc">Building and deploying production ML models, from XGBoost churn prediction pipelines to deep learning image classifiers. I care about models that actually ship and run reliably.</div>
-          </div>
-        </div>
-        <div class="doing-item">
-          <span class="doing-num">02</span>
-          <div class="doing-content">
-            <div class="doing-title">Data Engineering</div>
-            <div class="doing-desc">Snowflake pipelines, AWS Lambda functions, Snowpipe streams, and end-to-end infrastructure that moves data from raw sources to something the business can use.</div>
-          </div>
-        </div>
-        <div class="doing-item">
-          <span class="doing-num">03</span>
-          <div class="doing-content">
-            <div class="doing-title">Analytics</div>
-            <div class="doing-desc">Turning domain and nonprofit data into decisions. Building Tableau dashboards and doing the SQL work to surface what actually matters to stakeholders.</div>
-          </div>
-        </div>
-        <div class="doing-item">
-          <span class="doing-num">04</span>
-          <div class="doing-content">
-            <div class="doing-title">Research &amp; Study</div>
-            <div class="doing-desc">Completing an OMSCS degree with coursework in ML, NLP, Bayesian Statistics, and Cognitive Science. Currently self-studying algorithms through MIT 6.006 and CLRS as prep for Graduate Algorithms.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="subsection-title" style="margin-bottom:18px;">// interests</div>
-      <p style="font-size:14px; color:var(--text-dim); line-height:1.9; margin-bottom:0;">
-        I'm drawn to understanding how models actually work, not just tuning them until they score well.
-        That means spending time on the theory behind classical ML algorithms — how decision trees split,
-        why gradient boosting works, what regularization is really doing — and then applying that understanding
-        when building and evaluating models. On the deep learning side I'm interested in how neural networks
-        learn representations, which is what pulled me toward the MRI classifier project. Outside of work,
-        I follow the algorithms literature and enjoy working through proofs. There is something satisfying
-        about understanding why something is correct, not just that it works.
-      </p>
-    </div>
-
-    <!-- Resume -->
-    <div id="panel-resume" class="panel">
-      <h2 class="panel-title">Resume</h2>
-
+      <!-- Experience -->
       <div class="resume-section">
         <div class="resume-section-title">// experience</div>
         <div class="timeline">
@@ -709,7 +611,12 @@
               <div class="timeline-date">Sep 2023 &mdash; Present</div>
               <div class="timeline-title">Data Analyst</div>
               <div class="timeline-sub">Public Interest Registry &middot; Full-time &middot; Fairfax, VA</div>
-              <div class="timeline-desc">Building production ML models, Snowflake data pipelines, AWS Lambda functions, and behavioral segmentation systems for the nonprofit behind .org.</div>
+              <div class="timeline-bullets">
+                <div class="timeline-bullet">Built and deployed a first-year domain renewal prediction model (XGBoost, 0.91 AUC) with monthly production cadence via AWS Lambda and EventBridge</div>
+                <div class="timeline-bullet">Constructed a unified nonprofit database from scratch using web scraping, Lambda functions, and Snowflake pipelines to map .org's role in nonprofit growth across the US and UK</div>
+                <div class="timeline-bullet">Developed registrant behavioral segmentation to classify domain buyers by purchase patterns</div>
+                <div class="timeline-bullet">Building a Claude MCP integration for Tableau enabling natural language querying of dashboards</div>
+              </div>
             </div>
           </div>
           <div class="timeline-item">
@@ -717,13 +624,16 @@
             <div class="timeline-body">
               <div class="timeline-date">May 2023 &mdash; Aug 2023</div>
               <div class="timeline-title">Data Analyst Intern</div>
-              <div class="timeline-sub">Public Interest Registry &middot; Internship &middot; Reston, VA</div>
-              <div class="timeline-desc">Worked on a machine learning project to predict first-year domain renewal using SQL and Python.</div>
+              <div class="timeline-sub">Public Interest Registry &middot; Reston, VA</div>
+              <div class="timeline-bullets">
+                <div class="timeline-bullet">Built early version of the domain renewal prediction model using SQL and Python</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Education -->
       <div class="resume-section">
         <div class="resume-section-title">// education</div>
         <div class="timeline">
@@ -732,8 +642,15 @@
             <div class="timeline-body">
               <div class="timeline-date">Jan 2025 &mdash; Dec 2027</div>
               <div class="timeline-title">M.S. Computer Science &mdash; ML Concentration</div>
-              <div class="timeline-sub">Georgia Institute of Technology</div>
-              <div class="timeline-desc">Courses: Machine Learning, NLP, Bayesian Statistics, Cognitive Science, Graduate Algorithms (upcoming).</div>
+              <div class="timeline-sub">Georgia Institute of Technology (OMSCS)</div>
+              <div class="courses-pills">
+                <span class="course-pill">Machine Learning</span>
+                <span class="course-pill">Deep Learning</span>
+                <span class="course-pill">NLP</span>
+                <span class="course-pill">Bayesian Statistics</span>
+                <span class="course-pill">Cognitive Science</span>
+                <span class="course-pill">Graduate Algorithms (upcoming)</span>
+              </div>
             </div>
           </div>
           <div class="timeline-item">
@@ -742,7 +659,7 @@
               <div class="timeline-date">Sep 2019 &mdash; May 2023</div>
               <div class="timeline-title">B.S. Computational Data Science &amp; Neuroscience</div>
               <div class="timeline-sub">George Mason University &middot; Double Major</div>
-              <div class="timeline-desc">Activities: Data Science and Computation Society, Inventors and Innovations, American Statistical Association, Chess Club.</div>
+              <div class="timeline-desc">Data Science and Computation Society, American Statistical Association, Chess Club.</div>
             </div>
           </div>
           <div class="timeline-item">
@@ -756,6 +673,7 @@
         </div>
       </div>
 
+      <!-- Skills -->
       <div class="resume-section">
         <div class="resume-section-title">// skills</div>
         <div class="skill-rows">
@@ -764,20 +682,32 @@
             <span class="skill-row-vals">Python &middot; SQL &middot; Bash</span>
           </div>
           <div class="skill-row-item">
-            <span class="skill-row-label">ML / AI</span>
-            <span class="skill-row-vals">XGBoost &middot; scikit-learn &middot; PyTorch &middot; NumPy &middot; Pandas</span>
+            <span class="skill-row-label">ML / Classical</span>
+            <span class="skill-row-vals">XGBoost &middot; LightGBM &middot; scikit-learn &middot; Random Forest &middot; Logistic Regression</span>
+          </div>
+          <div class="skill-row-item">
+            <span class="skill-row-label">Deep Learning</span>
+            <span class="skill-row-vals">PyTorch &middot; CNNs &middot; Transformers &middot; Attention Mechanisms</span>
+          </div>
+          <div class="skill-row-item">
+            <span class="skill-row-label">NLP</span>
+            <span class="skill-row-vals">BERT &middot; Text Classification &middot; Embeddings &middot; Sequence Models</span>
+          </div>
+          <div class="skill-row-item">
+            <span class="skill-row-label">Data &amp; MLOps</span>
+            <span class="skill-row-vals">NumPy &middot; Pandas &middot; scikit-learn Pipelines &middot; Model Versioning</span>
           </div>
           <div class="skill-row-item">
             <span class="skill-row-label">Data Infrastructure</span>
-            <span class="skill-row-vals">Snowflake &middot; AWS Lambda &middot; AWS EventBridge &middot; dbt</span>
+            <span class="skill-row-vals">Snowflake &middot; AWS Lambda &middot; AWS EventBridge &middot; dbt &middot; Snowpipe</span>
           </div>
           <div class="skill-row-item">
             <span class="skill-row-label">Visualization</span>
-            <span class="skill-row-vals">Tableau &middot; Matplotlib &middot; Seaborn</span>
+            <span class="skill-row-vals">Tableau &middot; Matplotlib &middot; Seaborn &middot; Plotly</span>
           </div>
           <div class="skill-row-item">
             <span class="skill-row-label">Tooling</span>
-            <span class="skill-row-vals">Git &middot; Linux &middot; Jupyter &middot; VS Code</span>
+            <span class="skill-row-vals">Git &middot; Linux &middot; Jupyter &middot; VS Code &middot; Docker (basic)</span>
           </div>
         </div>
       </div>
@@ -888,8 +818,414 @@
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
     btn.classList.add('active');
+    if (typeof onTabChange === 'function') onTabChange(name);
   }
 
+  // ── Neuron ─────────────────────────────────────────────────────────────────
+  const nCanvas = document.createElement('canvas');
+  nCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;';
+  document.body.appendChild(nCanvas);
+  const nc = nCanvas.getContext('2d');
+  function resizeNeuronCanvas() { nCanvas.width = window.innerWidth; nCanvas.height = window.innerHeight; }
+  resizeNeuronCanvas();
+  window.addEventListener('resize', resizeNeuronCanvas);
+
+  // ── Neuron ─────────────────────────────────────────────────────────────────
+  // Soma sits behind the avatar, dendrites grow organically outward
+
+  // Put neuron canvas BEHIND the layout (z-index 0 area) but above neural bg
+  nCanvas.style.zIndex = '10';
+
+  let avatarCX = 0, avatarCY = 0, avatarR = 0;
+
+  function getAvatar() {
+    const el = document.querySelector('.avatar');
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    avatarCX = r.left + r.width / 2;
+    avatarCY = r.top + r.height / 2;
+    avatarR  = r.width / 2;
+  }
+
+  // ── Dendrite branch (recursive tree) ──
+  // Each branch grows from a start point outward, then spawns children
+  function makeBranch(opts) {
+    return {
+      sx: opts.sx, sy: opts.sy,
+      angle: opts.angle,
+      length: opts.length || (60 + Math.random() * 80),
+      grown: 0,           // 0..1 normal growth
+      overGrown: 0,       // 0..1 continued growth PAST length, drawn at low opacity
+      growSpeed: opts.growSpeed || (0.006 + Math.random() * 0.005),
+      overGrowSpeed: 0.003 + Math.random() * 0.002,
+      curve: opts.curve !== undefined ? opts.curve : (Math.random() - 0.5) * 0.9,
+      children: [],
+      childrenSpawned: false,
+      childCount: opts.childCount !== undefined ? opts.childCount : (Math.random() < 0.5 ? 2 : 1),
+      depth: opts.depth || 4,
+      delay: opts.delay || 0,
+      active: false,
+      signals: [],
+      retracting: false,
+      retractSpeed: 0.03,
+      tipX: opts.sx, tipY: opts.sy,
+      waypoints: [{ x: opts.sx, y: opts.sy }],
+    };
+  }
+
+  // Compute tip position given grown amount — follows a gentle arc
+  function branchTip(b, t) {
+    // Use a curved path: angle drifts by b.curve over the length
+    const steps = 20;
+    let x = b.sx, y = b.sy;
+    let angle = b.angle;
+    const stepLen = b.length * Math.min(t, 1) / steps;
+    const dAngle = b.curve / steps;
+    for (let i = 0; i < steps; i++) {
+      angle += dAngle;
+      x += Math.cos(angle) * stepLen;
+      y += Math.sin(angle) * stepLen;
+    }
+    return { x, y, angle };
+  }
+
+  // Draw a branch and its children recursively
+  function drawBranch(b, frameCount, alpha) {
+    if (!b.active && frameCount >= b.delay) b.active = true;
+    if (!b.active) return;
+
+    if (b.retracting) {
+      b.grown = Math.max(0, b.grown - b.retractSpeed);
+    } else {
+      if (b.grown < 1) b.grown = Math.min(1, b.grown + b.growSpeed);
+    }
+
+    if (b.grown <= 0) return;
+
+    // Draw curved branch as a series of small segments
+    const steps = 24;
+    const totalSteps = Math.floor(steps * b.grown);
+    if (totalSteps < 1) return;
+
+    // Depth-based opacity: primary branches full, children increasingly faded
+    const depthAlpha = b.depth >= 4 ? 1.0
+                     : b.depth === 3 ? 0.55
+                     : b.depth === 2 ? 0.32
+                     : 0.18;
+    const baseAlpha = alpha * Math.min(b.grown * 2, 1) * depthAlpha;
+    const lw = Math.max(0.4, (b.depth - 1) * 0.42);
+    const col = neuronColor.line;
+    const glowCol = neuronColor.glow;
+
+    nc.save();
+    nc.globalAlpha = baseAlpha * 0.88;
+    nc.strokeStyle = `rgba(${col},0.9)`;
+    nc.lineWidth = lw;
+    nc.shadowColor = `rgba(${glowCol},0.4)`;
+    nc.shadowBlur = 5;
+    nc.lineJoin = 'round';
+    nc.lineCap = 'round';
+
+    let x = b.sx, y = b.sy;
+    let angle = b.angle;
+    const stepLen = b.length / steps;
+    const dAngle = b.curve / steps;
+    b.waypoints = [{ x, y }];
+
+    nc.beginPath();
+    nc.moveTo(x, y);
+    for (let i = 0; i < totalSteps; i++) {
+      angle += dAngle;
+      // add tiny random jitter for organic feel
+      const jitter = (Math.random() - 0.5) * 0.04;
+      x += Math.cos(angle + jitter) * stepLen;
+      y += Math.sin(angle + jitter) * stepLen;
+      nc.lineTo(x, y);
+      b.waypoints.push({ x, y });
+    }
+    nc.stroke();
+    nc.restore();
+
+    // Store tip
+    b.tipX = x; b.tipY = y;
+
+    // Tip dot
+    if (b.grown >= 0.98 && b.depth <= 2) {
+      nc.save();
+      nc.globalAlpha = baseAlpha * 0.55;
+      nc.beginPath(); nc.arc(x, y, lw * 1.5, 0, Math.PI * 2);
+      nc.fillStyle = `rgba(${neuronColor.line},0.9)`; nc.fill();
+      nc.restore();
+    }
+
+    // Overgrowth extension — continues past the defined length at very low opacity
+    if (b.grown >= 1 && !b.retracting) {
+      b.overGrown = Math.min(1, b.overGrown + b.overGrowSpeed);
+      if (b.overGrown > 0) {
+        const overLen = b.length * 0.6 * b.overGrown; // grows up to 60% extra
+        const overSteps = 16;
+        let ox = x, oy = y, oAngle = angle;
+        const oDAngle = b.curve / steps * 0.5; // gentler curve on extension
+        nc.save();
+        nc.globalAlpha = depthAlpha * 0.14; // very low opacity
+        nc.strokeStyle = `rgba(${col},0.7)`;
+        nc.lineWidth = lw * 0.6;
+        nc.shadowBlur = 2;
+        nc.beginPath(); nc.moveTo(ox, oy);
+        const oStepLen = overLen / overSteps;
+        for (let i = 0; i < Math.floor(overSteps * b.overGrown); i++) {
+          oAngle += oDAngle + (Math.random() - 0.5) * 0.06;
+          ox += Math.cos(oAngle) * oStepLen;
+          oy += Math.sin(oAngle) * oStepLen;
+          nc.lineTo(ox, oy);
+        }
+        nc.stroke();
+        nc.restore();
+      }
+    }
+
+    // Spawn children when grown enough
+    if (b.grown > 0.85 && !b.childrenSpawned && b.depth > 1 && !b.retracting) {
+      b.childrenSpawned = true;
+      const tip = branchTip(b, 1);
+      for (let i = 0; i < b.childCount; i++) {
+        const spread = (b.childCount === 1 ? 0 : (i / (b.childCount - 1) - 0.5)) * 1.1;
+        b.children.push(makeBranch({
+          sx: tip.x, sy: tip.y,
+          angle: tip.angle + spread * 0.8 + (Math.random() - 0.5) * 0.3,
+          length: b.length * (0.5 + Math.random() * 0.3),
+          growSpeed: b.growSpeed * 0.9,
+          depth: b.depth - 1,
+          childCount: b.depth > 2 ? (Math.random() < 0.4 ? 2 : 1) : 0,
+          delay: 0,
+        }));
+      }
+    }
+
+    if (b.retracting) {
+      b.children.forEach(c => { c.retracting = true; });
+    }
+
+    b.children.forEach(c => drawBranch(c, frameCount, alpha * 0.85));
+
+    // Signals
+    b.signals = b.signals.filter(s => s.t <= 1.02);
+    b.signals.forEach(s => {
+      s.t += 0.02 + Math.random() * 0.005;
+      const idx = Math.min(Math.floor(s.t * (b.waypoints.length - 1)), b.waypoints.length - 1);
+      const p = b.waypoints[idx];
+      if (!p) return;
+      const fade = s.t > 0.75 ? (1 - (s.t - 0.75) / 0.25) : 1;
+      nc.save();
+      nc.globalAlpha = fade * 0.9 * alpha;
+      const g = nc.createRadialGradient(p.x, p.y, 0, p.x, p.y, 6);
+      g.addColorStop(0, `rgba(${neuronColor.signal},1)`);
+      g.addColorStop(0.5, `rgba(${neuronColor.glow},0.5)`);
+      g.addColorStop(1, `rgba(${neuronColor.glow},0)`);
+      nc.beginPath(); nc.arc(p.x, p.y, 6, 0, Math.PI * 2);
+      nc.fillStyle = g; nc.fill();
+      nc.beginPath(); nc.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      nc.fillStyle = `rgba(${neuronColor.signal},0.95)`; nc.fill();
+      nc.restore();
+    });
+
+    // Occasionally fire a signal
+    if (b.grown > 0.6 && !b.retracting && Math.random() < 0.003) {
+      b.signals.push({ t: 0 });
+    }
+  }
+
+  // ── Primary dendrites ──
+  // 8 main branches radiating from avatar edge at different angles
+  // Angles chosen to spread around the avatar without going through sidebar text
+  let primaryBranches = [];
+  let initialized = false;
+  let nTick = 0;
+  let currentTab = 'about';
+
+  // Per-tab neuron color palette
+  const TAB_COLORS = {
+    'about':     { line: '210,225,245', signal: '230,240,255', glow: '190,210,235' },
+    'portfolio': { line: '251,191,36',  signal: '253,224,71',  glow: '234,179,8'   },
+    'papers':    { line: '196,148,246', signal: '216,180,254', glow: '168,85,247'  },
+  };
+  let neuronColor = TAB_COLORS['about'];
+
+  // Scroll-driven growth multiplier (0..1)
+  // 0 = top of page, 1 = fully scrolled
+  let scrollGrowth = 0;
+  let targetScrollGrowth = 0;
+
+  window.addEventListener('scroll', () => {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    targetScrollGrowth = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
+  });
+
+  // Apply scroll growth to all branches recursively
+  // Also lowers the child spawn threshold so more children appear as you scroll
+  function applyScrollGrowth(branch, baseGrowth, scrollBonus) {
+    const maxAllowed = Math.min(baseGrowth + scrollBonus * 0.88, 1);
+    if (!branch.retracting && branch.grown < maxAllowed) {
+      branch.grown = Math.min(branch.grown + branch.growSpeed * 2.0, maxAllowed);
+    }
+    // Spawn extra children at higher scroll levels if depth allows
+    if (!branch.childrenSpawned && branch.grown > 0.7 && scrollBonus > 0.4 && branch.depth > 1 && !branch.retracting) {
+      branch.childrenSpawned = true;
+      const tip = { x: branch.tipX, y: branch.tipY };
+      const extraCount = scrollBonus > 0.7 ? 3 : 2;
+      for (let i = 0; i < extraCount; i++) {
+        const spread = (Math.random() - 0.5) * 1.4;
+        branch.children.push(makeBranch({
+          sx: tip.x, sy: tip.y,
+          angle: branch.angle + branch.curve + spread,
+          length: branch.length * (0.35 + Math.random() * 0.25),
+          growSpeed: branch.growSpeed * 0.8,
+          depth: branch.depth - 1,
+          childCount: branch.depth > 2 ? 1 : 0,
+          delay: 0,
+        }));
+      }
+    }
+    branch.children.forEach(c => applyScrollGrowth(c, baseGrowth, scrollBonus));
+  }
+
+  // Per-tab branch personality
+  const TAB_BRANCH_DEFS = {
+    // About & Resume: balanced spread, moderate curve, medium depth
+    // Feels like a calm, thorough thinker
+    'about': [
+      { angleDeg: -80,  len: 115, depth: 4, curve:  0.28, delay: 0,   childCount: 2, speed: 0.008 },
+      { angleDeg: -50,  len: 130, depth: 4, curve: -0.18, delay: 18,  childCount: 2, speed: 0.007 },
+      { angleDeg: -20,  len: 140, depth: 4, curve:  0.12, delay: 35,  childCount: 2, speed: 0.009 },
+      { angleDeg:  15,  len: 125, depth: 4, curve: -0.22, delay: 50,  childCount: 2, speed: 0.007 },
+      { angleDeg:  55,  len: 105, depth: 3, curve:  0.18, delay: 65,  childCount: 2, speed: 0.008 },
+      { angleDeg:  95,  len:  90, depth: 3, curve: -0.14, delay: 80,  childCount: 1, speed: 0.007 },
+      { angleDeg: 135,  len:  80, depth: 3, curve:  0.25, delay: 95,  childCount: 1, speed: 0.006 },
+      { angleDeg:-120,  len:  70, depth: 3, curve: -0.18, delay: 110, childCount: 1, speed: 0.006 },
+    ],
+    // Projects: fewer branches, longer and more aggressive — bold, reaching far
+    // Fast growth, strong rightward bias toward project cards
+    'portfolio': [
+      { angleDeg: -60,  len: 175, depth: 5, curve:  0.10, delay: 0,   childCount: 3, speed: 0.014 },
+      { angleDeg: -25,  len: 195, depth: 5, curve: -0.08, delay: 12,  childCount: 3, speed: 0.016 },
+      { angleDeg:  10,  len: 180, depth: 5, curve:  0.06, delay: 22,  childCount: 3, speed: 0.013 },
+      { angleDeg:  40,  len: 155, depth: 4, curve: -0.12, delay: 35,  childCount: 2, speed: 0.012 },
+      { angleDeg:  80,  len: 120, depth: 4, curve:  0.20, delay: 50,  childCount: 2, speed: 0.011 },
+      { angleDeg:-100,  len:  85, depth: 3, curve: -0.25, delay: 65,  childCount: 1, speed: 0.010 },
+    ],
+    // Papers: many fine branches, tighter curves, more recursive — dense academic texture
+    // Slower, more deliberate, lots of small offshoots
+    'papers': [
+      { angleDeg: -85,  len:  90, depth: 5, curve:  0.45, delay: 0,   childCount: 3, speed: 0.005 },
+      { angleDeg: -60,  len: 100, depth: 5, curve: -0.38, delay: 10,  childCount: 3, speed: 0.005 },
+      { angleDeg: -35,  len: 110, depth: 5, curve:  0.30, delay: 20,  childCount: 3, speed: 0.005 },
+      { angleDeg: -10,  len: 105, depth: 5, curve: -0.28, delay: 30,  childCount: 3, speed: 0.004 },
+      { angleDeg:  20,  len:  95, depth: 4, curve:  0.35, delay: 40,  childCount: 2, speed: 0.005 },
+      { angleDeg:  50,  len:  85, depth: 4, curve: -0.32, delay: 50,  childCount: 2, speed: 0.004 },
+      { angleDeg:  80,  len:  75, depth: 4, curve:  0.40, delay: 60,  childCount: 2, speed: 0.004 },
+      { angleDeg: 110,  len:  70, depth: 3, curve: -0.35, delay: 70,  childCount: 2, speed: 0.004 },
+      { angleDeg: 140,  len:  65, depth: 3, curve:  0.38, delay: 80,  childCount: 1, speed: 0.004 },
+      { angleDeg:-110,  len:  60, depth: 3, curve: -0.30, delay: 90,  childCount: 1, speed: 0.004 },
+    ],
+  };
+
+  function buildPrimaryBranches() {
+    getAvatar();
+    primaryBranches = [];
+    const defs = TAB_BRANCH_DEFS[currentTab] || TAB_BRANCH_DEFS['about'];
+
+    defs.forEach(def => {
+      const rad = def.angleDeg * Math.PI / 180;
+      const sx = avatarCX + Math.cos(rad) * (avatarR + 2);
+      const sy = avatarCY + Math.sin(rad) * (avatarR + 2);
+      primaryBranches.push(makeBranch({
+        sx, sy,
+        angle: rad,
+        length: def.len,
+        depth: def.depth,
+        curve: def.curve,
+        delay: def.delay,
+        childCount: def.childCount,
+        growSpeed: def.speed + Math.random() * 0.003,
+      }));
+    });
+  }
+
+  function retractAll() {
+    primaryBranches.forEach(b => {
+      b.retracting = true;
+      b.children.forEach(c => { c.retracting = true; });
+    });
+  }
+
+  function onTabChange(tabName) {
+    currentTab = tabName;
+    neuronColor = TAB_COLORS[tabName] || TAB_COLORS['about'];
+    retractAll();
+    setTimeout(() => buildPrimaryBranches(), 800);
+  }
+
+  function neuronTick() {
+    nc.clearRect(0, 0, nCanvas.width, nCanvas.height);
+    nTick++;
+
+    getAvatar();
+
+    if (!initialized && nTick > 20) {
+      initialized = true;
+      buildPrimaryBranches();
+    }
+
+    // ── Draw soma behind avatar ──
+    // Outer diffuse glow (large, very transparent)
+    nc.save();
+    const outerGlow = nc.createRadialGradient(avatarCX, avatarCY, avatarR * 0.5, avatarCX, avatarCY, avatarR * 2.2);
+    outerGlow.addColorStop(0, `rgba(${neuronColor.glow},0.18)`);
+    outerGlow.addColorStop(0.5, `rgba(${neuronColor.glow},0.08)`);
+    outerGlow.addColorStop(1, `rgba(${neuronColor.glow},0)`);
+    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR * 2.2, 0, Math.PI * 2);
+    nc.fillStyle = outerGlow; nc.fill(); nc.restore();
+
+    // Soma disc — slightly larger than avatar, peeks out around edges
+    nc.save();
+    const somaG = nc.createRadialGradient(avatarCX - 4, avatarCY - 4, 2, avatarCX, avatarCY, avatarR + 10);
+    somaG.addColorStop(0, `rgba(${neuronColor.line},0.5)`);
+    somaG.addColorStop(0.5, `rgba(${neuronColor.glow},0.3)`);
+    somaG.addColorStop(1, `rgba(${neuronColor.glow},0.08)`);
+    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 10, 0, Math.PI * 2);
+    nc.fillStyle = somaG; nc.fill();
+    // Ring
+    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 10, 0, Math.PI * 2);
+    nc.strokeStyle = `rgba(${neuronColor.line},0.3)`; nc.lineWidth = 1.5; nc.stroke();
+    nc.restore();
+
+    // Pulse ring
+    const pulse = (Math.sin(nTick * 0.035) + 1) * 0.5;
+    nc.save();
+    nc.globalAlpha = 0.08 + pulse * 0.1;
+    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 14 + pulse * 8, 0, Math.PI * 2);
+    nc.strokeStyle = `rgba(${neuronColor.line},0.85)`; nc.lineWidth = 1; nc.stroke();
+    nc.restore();
+
+    // ── Scroll-driven growth ──
+    // Smoothly interpolate scrollGrowth toward target
+    scrollGrowth += (targetScrollGrowth - scrollGrowth) * 0.06;
+
+    // Apply scroll bonus growth to all branches
+    if (scrollGrowth > 0.02) {
+      primaryBranches.forEach(b => applyScrollGrowth(b, 0.3, scrollGrowth));
+    }
+
+    // ── Draw dendrites ──
+    primaryBranches.forEach(b => drawBranch(b, nTick, 1.0));
+
+    requestAnimationFrame(neuronTick);
+  }
+
+  neuronTick();
+
+
+  // ── Neural network — terminal green palette
   const canvas = document.getElementById('neural-canvas');
   const ctx = canvas.getContext('2d');
   let nodes = [], signals = [], W, H;
@@ -931,6 +1267,8 @@
       if (n.y < 0 || n.y > H) n.vy *= -1;
     });
     maybeFireSignal();
+
+    // edges
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
@@ -938,37 +1276,313 @@
         const dist = Math.sqrt(dx*dx + dy*dy);
         if (dist < 180) {
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(88,166,255,${(1 - dist/180) * 0.18})`;
+          ctx.strokeStyle = `rgba(74,222,128,${(1 - dist/180) * 0.15})`;
           ctx.lineWidth = 0.8; ctx.stroke();
         }
       }
     }
+
+    // signals
     signals = signals.filter(s => s.t <= 1);
     signals.forEach(s => {
       s.t += 0.018;
       const px = s.ax + (s.bx - s.ax) * s.t;
       const py = s.ay + (s.by - s.ay) * s.t;
       const grad = ctx.createRadialGradient(px, py, 0, px, py, 10);
-      grad.addColorStop(0, 'rgba(88,200,255,0.9)');
-      grad.addColorStop(0.4, 'rgba(88,166,255,0.4)');
-      grad.addColorStop(1, 'rgba(88,166,255,0)');
+      grad.addColorStop(0, 'rgba(74,222,128,0.9)');
+      grad.addColorStop(0.4, 'rgba(34,197,94,0.4)');
+      grad.addColorStop(1, 'rgba(34,197,94,0)');
       ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2);
       ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(180,220,255,0.95)'; ctx.fill();
+      ctx.fillStyle = 'rgba(187,247,208,0.95)'; ctx.fill();
     });
+
+    // nodes
     nodes.forEach(n => {
       const glow = 0.65 + 0.35 * Math.sin(n.pulse);
       const r = n.r * glow, alpha = n.brightness * glow;
       const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
-      grad.addColorStop(0, `rgba(88,166,255,${alpha * 0.5})`);
-      grad.addColorStop(0.5, `rgba(88,166,255,${alpha * 0.15})`);
-      grad.addColorStop(1, 'rgba(88,166,255,0)');
+      grad.addColorStop(0, `rgba(74,222,128,${alpha * 0.45})`);
+      grad.addColorStop(0.5, `rgba(74,222,128,${alpha * 0.12})`);
+      grad.addColorStop(1, 'rgba(74,222,128,0)');
       ctx.beginPath(); ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
       ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(140,200,255,${alpha * 0.9})`; ctx.fill();
+      ctx.fillStyle = `rgba(134,239,172,${alpha * 0.9})`; ctx.fill();
     });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize(); draw();
+</script>
+
+</body>
+</html>  // ── Neuron ──────────────────────────────────────────────────────────────────────────
+  const CX = 210, CY = 230;
+
+  function makeDendrite(angle, length, spread, depth) {
+    return { angle, length, spread, depth, grown: 0, children: [], signals: [] };
+  }
+
+  const dendrites = [
+    makeDendrite(-Math.PI*0.85, 95, 0.42, 3),
+    makeDendrite(-Math.PI*0.55, 80, 0.38, 3),
+    makeDendrite(-Math.PI*0.25, 70, 0.35, 2),
+    makeDendrite( Math.PI*0.05, 75, 0.36, 3),
+    makeDendrite( Math.PI*0.35, 90, 0.40, 3),
+    makeDendrite( Math.PI*0.62, 85, 0.38, 2),
+    makeDendrite( Math.PI*0.88, 72, 0.34, 2),
+  ];
+
+  const axon = { grown: 0, length: 155, signals: [] };
+  let nTick = 0;
+
+  function drawBranch(ctx, x, y, branch, alpha) {
+    if (branch.grown <= 0) return;
+    const len = branch.length * Math.min(branch.grown, 1);
+    const ex = x + Math.cos(branch.angle) * len;
+    const ey = y + Math.sin(branch.angle) * len;
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.75 * Math.min(branch.grown, 1);
+    ctx.strokeStyle = 'rgba(74,222,128,0.85)';
+    ctx.lineWidth = 0.8 + branch.depth * 0.22;
+    ctx.shadowColor = 'rgba(74,222,128,0.35)';
+    ctx.shadowBlur = 4;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
+    ctx.restore();
+    if (branch.grown >= 1) {
+      ctx.save(); ctx.globalAlpha = alpha * 0.6;
+      ctx.beginPath(); ctx.arc(ex, ey, 1.6, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(134,239,172,0.9)'; ctx.fill(); ctx.restore();
+    }
+    branch.signals = branch.signals.filter(s => s.t <= 1.05);
+    branch.signals.forEach(s => {
+      s.t += 0.024 + Math.random()*0.005;
+      const sx = x + Math.cos(branch.angle) * branch.length * Math.min(s.t,1);
+      const sy = y + Math.sin(branch.angle) * branch.length * Math.min(s.t,1);
+      const fade = s.t > 0.8 ? (1-(s.t-0.8)/0.25) : 1;
+      nc.save(); nc.globalAlpha = alpha * fade * 0.9;
+      const g = nc.createRadialGradient(sx,sy,0,sx,sy,6);
+      g.addColorStop(0,'rgba(187,247,208,1)');
+      g.addColorStop(0.5,'rgba(74,222,128,0.55)');
+      g.addColorStop(1,'rgba(74,222,128,0)');
+      nc.beginPath(); nc.arc(sx,sy,6,0,Math.PI*2); nc.fillStyle=g; nc.fill();
+      nc.beginPath(); nc.arc(sx,sy,2,0,Math.PI*2); nc.fillStyle='rgba(220,255,235,1)'; nc.fill();
+      nc.restore();
+    });
+    if (branch.grown >= 1 && branch.depth > 1) {
+      branch.children.forEach(child => drawBranch(ctx, ex, ey, child, alpha * 0.82));
+    }
+  }
+
+  function growBranches(branches, rate) {
+    branches.forEach(b => {
+      if (b.grown < 1) {
+        b.grown += rate * (0.8 + Math.random()*0.4);
+      } else if (b.depth > 1 && b.children.length === 0 && nTick > 60) {
+        const count = 1 + Math.floor(Math.random()*2);
+        for (let i = 0; i < count; i++) {
+          const spread = (Math.random()-0.5) * b.spread * 2;
+          b.children.push(makeDendrite(
+            b.angle + spread,
+            b.length * (0.45 + Math.random()*0.25),
+            b.spread * 0.75, b.depth - 1
+          ));
+        }
+      } else { growBranches(b.children, rate * 0.9); }
+    });
+  }
+
+  function fireRandomSignal(branches) {
+    const grown = branches.filter(b => b.grown >= 1);
+    if (!grown.length) return;
+    const b = grown[Math.floor(Math.random()*grown.length)];
+    b.signals.push({ t: 0 });
+    if (b.children.length && Math.random() < 0.5) {
+      setTimeout(() => {
+        const c = b.children[Math.floor(Math.random()*b.children.length)];
+        if (c) c.signals.push({ t: 0 });
+      }, 380);
+    }
+  }
+
+  let lastNFire = 0;
+
+  function neuronTick() {
+    nc.clearRect(0, 0, 420, 420);
+    nTick++;
+    if (nTick < 300) growBranches(dendrites, 0.008);
+    if (axon.grown < 1) axon.grown += 0.006;
+
+    if (nTick - lastNFire > 55 + Math.random()*40) {
+      fireRandomSignal(dendrites);
+      if (axon.grown > 0.5) axon.signals.push({ t: 0 });
+      lastNFire = nTick;
+    }
+
+    dendrites.forEach(b => drawBranch(nc, CX, CY, b, 0.9));
+
+    const axAngle = Math.PI * 0.28;
+    const axLen = axon.length * Math.min(axon.grown, 1);
+    const axEx = CX + Math.cos(axAngle)*axLen;
+    const axEy = CY + Math.sin(axAngle)*axLen;
+    nc.save();
+    nc.globalAlpha = 0.7 * Math.min(axon.grown,1);
+    nc.strokeStyle = 'rgba(74,222,128,0.9)';
+    nc.lineWidth = 1.5;
+    nc.shadowColor = 'rgba(74,222,128,0.5)'; nc.shadowBlur = 6;
+    nc.beginPath(); nc.moveTo(CX,CY); nc.lineTo(axEx,axEy); nc.stroke();
+    nc.restore();
+    if (axon.grown >= 0.98) {
+      nc.save(); nc.globalAlpha = 0.65;
+      nc.beginPath(); nc.arc(axEx,axEy,4,0,Math.PI*2);
+      nc.fillStyle='rgba(74,222,128,0.7)'; nc.fill(); nc.restore();
+    }
+    axon.signals = axon.signals.filter(s => s.t <= 1.05);
+    axon.signals.forEach(s => {
+      s.t += 0.018;
+      const sx = CX + Math.cos(axAngle)*axon.length*Math.min(s.t,1);
+      const sy = CY + Math.sin(axAngle)*axon.length*Math.min(s.t,1);
+      const fade = s.t > 0.75 ? (1-(s.t-0.75)/0.3) : 1;
+      nc.save(); nc.globalAlpha = fade*0.95;
+      const g = nc.createRadialGradient(sx,sy,0,sx,sy,7);
+      g.addColorStop(0,'rgba(187,247,208,1)');
+      g.addColorStop(0.5,'rgba(74,222,128,0.5)');
+      g.addColorStop(1,'rgba(74,222,128,0)');
+      nc.beginPath(); nc.arc(sx,sy,7,0,Math.PI*2); nc.fillStyle=g; nc.fill();
+      nc.beginPath(); nc.arc(sx,sy,2.2,0,Math.PI*2); nc.fillStyle='rgba(220,255,235,1)'; nc.fill();
+      nc.restore();
+    });
+
+    // Soma glow
+    nc.save();
+    const somaGlow = nc.createRadialGradient(CX,CY,0,CX,CY,28);
+    somaGlow.addColorStop(0,'rgba(74,222,128,0.2)');
+    somaGlow.addColorStop(1,'rgba(74,222,128,0)');
+    nc.beginPath(); nc.arc(CX,CY,28,0,Math.PI*2);
+    nc.fillStyle=somaGlow; nc.fill(); nc.restore();
+
+    // Soma body
+    nc.save();
+    const somaG = nc.createRadialGradient(CX-3,CY-3,1,CX,CY,13);
+    somaG.addColorStop(0,'rgba(187,247,208,0.95)');
+    somaG.addColorStop(0.5,'rgba(74,222,128,0.85)');
+    somaG.addColorStop(1,'rgba(22,163,74,0.7)');
+    nc.beginPath(); nc.arc(CX,CY,13,0,Math.PI*2);
+    nc.fillStyle=somaG; nc.fill();
+    nc.strokeStyle='rgba(134,239,172,0.5)'; nc.lineWidth=1; nc.stroke();
+    nc.restore();
+
+    // Nucleus
+    nc.save();
+    const nucG = nc.createRadialGradient(CX-2,CY-2,0,CX,CY,6);
+    nucG.addColorStop(0,'rgba(240,255,244,0.9)');
+    nucG.addColorStop(1,'rgba(134,239,172,0.6)');
+    nc.beginPath(); nc.arc(CX,CY,6,0,Math.PI*2);
+    nc.fillStyle=nucG; nc.fill(); nc.restore();
+
+    // Pulse ring
+    const pulse = (Math.sin(nTick*0.04)+1)*0.5;
+    nc.save(); nc.globalAlpha = 0.1 + pulse*0.08;
+    nc.beginPath(); nc.arc(CX,CY,17+pulse*6,0,Math.PI*2);
+    nc.strokeStyle='rgba(74,222,128,0.8)'; nc.lineWidth=1; nc.stroke();
+    nc.restore();
+
+    requestAnimationFrame(neuronTick);
+  }
+
+  neuronTick();
+
+  // ── Neural network — terminal green palette
+  const canvas = document.getElementById('neural-canvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [], signals = [], W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    nodes = []; signals = [];
+    const count = Math.max(Math.floor((W * H) / 18000), 55);
+    for (let i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.45, vy: (Math.random() - 0.5) * 0.45,
+        r: Math.random() * 2.8 + 1.2,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.012 + Math.random() * 0.02,
+        brightness: 0.4 + Math.random() * 0.6
+      });
+    }
+  }
+
+  function maybeFireSignal() {
+    if (Math.random() < 0.04 && nodes.length > 1) {
+      const ai = Math.floor(Math.random() * nodes.length);
+      let bi = Math.floor(Math.random() * nodes.length);
+      if (bi === ai) bi = (ai + 1) % nodes.length;
+      const a = nodes[ai], b = nodes[bi];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 200) signals.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y, t: 0 });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy; n.pulse += n.pulseSpeed;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+    maybeFireSignal();
+
+    // edges
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 180) {
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(74,222,128,${(1 - dist/180) * 0.15})`;
+          ctx.lineWidth = 0.8; ctx.stroke();
+        }
+      }
+    }
+
+    // signals
+    signals = signals.filter(s => s.t <= 1);
+    signals.forEach(s => {
+      s.t += 0.018;
+      const px = s.ax + (s.bx - s.ax) * s.t;
+      const py = s.ay + (s.by - s.ay) * s.t;
+      const grad = ctx.createRadialGradient(px, py, 0, px, py, 10);
+      grad.addColorStop(0, 'rgba(74,222,128,0.9)');
+      grad.addColorStop(0.4, 'rgba(34,197,94,0.4)');
+      grad.addColorStop(1, 'rgba(34,197,94,0)');
+      ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(187,247,208,0.95)'; ctx.fill();
+    });
+
+    // nodes
+    nodes.forEach(n => {
+      const glow = 0.65 + 0.35 * Math.sin(n.pulse);
+      const r = n.r * glow, alpha = n.brightness * glow;
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
+      grad.addColorStop(0, `rgba(74,222,128,${alpha * 0.45})`);
+      grad.addColorStop(0.5, `rgba(74,222,128,${alpha * 0.12})`);
+      grad.addColorStop(1, 'rgba(74,222,128,0)');
+      ctx.beginPath(); ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(134,239,172,${alpha * 0.9})`; ctx.fill();
+    });
+
     requestAnimationFrame(draw);
   }
 

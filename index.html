@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J. Khattak · Analytics Engineer & ML Practitioner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0f14;
+      --bg-card:  #161b22;
+      --bg-hover: #1c2128;
+      --border:   #21262d;
+      --border-hover: #30363d;
+      --text:     #c9d1d9;
+      --text-dim: #8b949e;
+      --text-bright: #f0f6fc;
+      --accent:   #58a6ff;
+      --accent-dim: #1f6feb;
+      --mono: 'JetBrains Mono', 'Courier New', monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(13, 15, 20, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: lowercase;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 96px 48px 72px;
+      max-width: 860px;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: var(--sans);
+      font-size: 52px;
+      font-weight: 600;
+      color: var(--text-bright);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-role {
+      font-size: 16px;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+
+    .hero-bio {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.85;
+      max-width: 580px;
+    }
+
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent-dim);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #388bfd; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 0.5px solid var(--border-hover);
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Sections ── */
+    section {
+      padding: 56px 48px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      max-width: 860px;
+    }
+
+    .about-text {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.9;
+    }
+
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .about-stats { display: flex; flex-direction: column; gap: 0; }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 12px;
+      gap: 16px;
+    }
+
+    .stat-label { color: var(--text-dim); flex-shrink: 0; }
+    .stat-val { color: var(--text-bright); font-weight: 500; text-align: right; }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 1000px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-hover);
+      border-radius: 8px;
+      padding: 22px;
+      transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-hover);
+    }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .card-footer {
+      margin-top: 18px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: #1a2030;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border-hover);
+    }
+
+    .card-links {
+      margin-top: 14px;
+      display: flex;
+      gap: 14px;
+    }
+
+    .card-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      max-width: 860px;
+    }
+
+    .skill-block {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-hover);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+
+    .skill-block-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .skill-list {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 2.1;
+    }
+
+    /* ── Papers ── */
+    .papers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 760px;
+    }
+
+    .paper-row {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-hover);
+      border-radius: 8px;
+      padding: 20px 22px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: border-color 0.15s;
+    }
+
+    .paper-row:hover { border-color: var(--accent); }
+
+    .paper-icon {
+      font-size: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .paper-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-bright);
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+
+    .paper-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--mono);
+    }
+
+    .paper-meta a { color: var(--accent); }
+
+    /* ── Blog ── */
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 700px;
+    }
+
+    .blog-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 16px 0;
+      border-bottom: 0.5px solid var(--border);
+      gap: 24px;
+    }
+
+    .blog-title {
+      font-size: 13px;
+      color: var(--text);
+      transition: color 0.15s;
+    }
+
+    .blog-row:hover .blog-title { color: var(--accent); }
+
+    .blog-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .blog-placeholder {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #484f58;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 18px; }
+      #hero { padding: 60px 20px 48px; }
+      h1 { font-size: 36px; }
+      section { padding: 40px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">jkhattak.github.io</span>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#papers">papers</a></li>
+      <li><a href="#blog">blog</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" style="border-top: none;">
+    <div class="eyebrow">// analytics engineer · ml engineer · omscs</div>
+    <h1>J. Khattak</h1>
+    <p class="hero-role">Building ML systems at scale &mdash; Northern Virginia</p>
+    <p class="hero-bio">
+      Analytics engineer and ML practitioner working at a domain registrar,
+      where I own <strong>production churn prediction models, behavioral segmentation
+      pipelines, and Snowflake data infrastructure</strong>. Completing my OMSCS
+      degree at Georgia Tech &mdash; one course left: Graduate Algorithms (CS&nbsp;6515).
+    </p>
+    <div class="cta-row">
+      <a href="#projects"><button class="btn-primary">view projects</button></a>
+      <a href="https://github.com/jkhattak" target="_blank" rel="noopener"><button class="btn-ghost">github &rarr;</button></a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-label">// about</div>
+    <div class="about-grid">
+      <p class="about-text">
+        I work at the intersection of <strong>machine learning, data engineering,
+        and analytics</strong> &mdash; building systems that run in production, not just
+        notebooks. My scope spans Snowflake SQL pipelines, XGBoost models deployed
+        via AWS Lambda, and end-to-end behavioral segmentation.<br><br>
+        I'm finishing my <strong>OMSCS degree</strong> at Georgia Tech, with courses in
+        NLP, Bayesian Statistics, and Cognitive Science behind me. I study
+        algorithms through MIT 6.006 and CLRS to go deep on fundamentals.
+        Outside work you'll find me at the gym or reading Dostoevsky.
+      </p>
+      <div class="about-stats">
+        <div class="stat-row">
+          <span class="stat-label">currently studying</span>
+          <span class="stat-val">MIT 6.006 &middot; AVL Trees</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">active project</span>
+          <span class="stat-val">Brain Tumor MRI Classifier</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">omscs remaining</span>
+          <span class="stat-val">CS 6515 (fall)</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">location</span>
+          <span class="stat-val">Reston, VA</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">stack</span>
+          <span class="stat-val">Python &middot; SQL &middot; PyTorch &middot; Snowflake</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-label">// projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="card-tag">computer vision</div>
+        <div class="card-title">Brain Tumor MRI Classifier</div>
+        <div class="card-desc">
+          4-class CNN distinguishing glioma, meningioma, pituitary tumor, and
+          no-tumor from MRI scans on Kaggle. Class-weighted cross-entropy loss
+          handles dataset imbalance.
+        </div>
+        <div class="card-footer">
+          <span class="pill">pytorch</span>
+          <span class="pill">cnn</span>
+          <span class="pill">kaggle</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-tag">ml &middot; production</div>
+        <div class="card-title">Domain Churn Prediction</div>
+        <div class="card-desc">
+          End-to-end XGBoost pipeline: Snowflake cohort extraction, behavioral
+          feature engineering with percentile-based segmentation, risk tier
+          scoring, and Snowflake writebacks. 0.91 out-of-sample AUC.
+        </div>
+        <div class="card-footer">
+          <span class="pill">xgboost</span>
+          <span class="pill">snowflake</span>
+          <span class="pill">aws lambda</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-tag">nlp</div>
+        <div class="card-title">Key-Value Memory Network</div>
+        <div class="card-desc">
+          KVMemNet implementation in PyTorch from CS 7650 (NLP). Attention
+          over a key-value memory store for question answering tasks.
+        </div>
+        <div class="card-footer">
+          <span class="pill">pytorch</span>
+          <span class="pill">nlp</span>
+          <span class="pill">attention</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-tag">bayesian stats</div>
+        <div class="card-title">Developer Burnout Prediction</div>
+        <div class="card-desc">
+          Bayesian ordinal logistic regression model for predicting developer
+          burnout levels. Implemented in PyMC with ArviZ for posterior
+          diagnostics and convergence checks.
+        </div>
+        <div class="card-footer">
+          <span class="pill">pymc</span>
+          <span class="pill">arviz</span>
+          <span class="pill">bayesian</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="section-label">// skills</div>
+    <div class="skills-grid">
+
+      <div class="skill-block">
+        <div class="skill-block-label">languages</div>
+        <div class="skill-list">
+          Python<br>SQL<br>Bash
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-block-label">ml / ai</div>
+        <div class="skill-list">
+          XGBoost<br>PyTorch<br>scikit-learn<br>PyMC / ArviZ
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-block-label">data infra</div>
+        <div class="skill-list">
+          Snowflake<br>dbt<br>AWS Lambda<br>Tableau
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-block-label">cs foundations</div>
+        <div class="skill-list">
+          Algorithms &amp; DS<br>Bayesian Stats<br>NLP<br>Cognitive Science
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-block-label">tooling</div>
+        <div class="skill-list">
+          Git<br>Linux<br>VS Code<br>Jupyter
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Papers -->
+  <section id="papers">
+    <div class="section-label">// omscs papers</div>
+    <div class="papers-list">
+
+      <div class="paper-row">
+        <span class="paper-icon">&#128196;</span>
+        <div>
+          <div class="paper-title">The Cognitive Offloading Paradox: Generative AI's Impact on Creativity and Critical Thinking</div>
+          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; Literature Review &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        </div>
+      </div>
+
+      <div class="paper-row">
+        <span class="paper-icon">&#128196;</span>
+        <div>
+          <div class="paper-title">LLMs Through a Cognitive Science Framework</div>
+          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        </div>
+      </div>
+
+      <div class="paper-row">
+        <span class="paper-icon">&#128196;</span>
+        <div>
+          <div class="paper-title">Distributed Cognition and Brain-Computer Interfaces</div>
+          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        </div>
+      </div>
+
+      <div class="paper-row">
+        <span class="paper-icon">&#128196;</span>
+        <div>
+          <div class="paper-title">Poisson-Gamma Model for World Cup Goal Scoring</div>
+          <div class="paper-meta">ISyE 6420 &middot; Bayesian Statistics &middot; 2026 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section id="blog">
+    <div class="section-label">// blog</div>
+    <div class="blog-list">
+      <p class="blog-placeholder">Posts coming soon &mdash; writing about ML in production, algorithms study, and OMSCS coursework.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-note">jkhattak.github.io &mdash; built with html &amp; css</span>
+    <div class="footer-links">
+      <a href="https://github.com/jkhattak" target="_blank" rel="noopener">github</a>
+      <a href="https://linkedin.com/in/jkhattak" target="_blank" rel="noopener">linkedin</a>
+      <a href="mailto:you@email.com">email</a>
+    </div>
+  </footer>
+
+</body>
+</html>

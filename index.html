@@ -11,22 +11,29 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Charcoal green-tint terminal palette */
-      --bg:           #0e1210;
-      --bg-card:      #151a16;
-      --bg-2:         #1a211b;
-      --border:       #1f2b21;
-      --border-h:     #2a3d2c;
-      --text:         #cdd8ce;
-      --text-dim:     #7d9480;
-      --text-bright:  #eef5ef;
-      --accent:       #4ade80;
-      --accent-dim:   #16a34a;
-      --accent-glow:  #22c55e;
+      /* Studio grey — matched to B&W profile photo background */
+      --bg:           #484c50;
+      --bg-card:      #3e4246;
+      --bg-2:         #363a3d;
+      --border:       #2e3134;
+      --border-h:     #52575c;
+      --text:         #f0ede8;
+      --text-dim:     #a09c96;
+      --text-bright:  #faf8f5;
+      --accent:       #d4cfc8;
+      --accent-dim:   #8a8680;
+      --accent-glow:  #bab5ae;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
       --radius: 14px;
-      --sidebar-w: 300px;
+      --sidebar-w: clamp(260px, 25vw, 320px);
+
+      /* Fluid type scale */
+      --text-xs:   clamp(10px, 0.6rem + 0.3vw, 12px);
+      --text-sm:   clamp(11px, 0.7rem + 0.3vw, 13px);
+      --text-base: clamp(13px, 0.8rem + 0.4vw, 15px);
+      --text-lg:   clamp(15px, 0.9rem + 0.5vw, 18px);
+      --text-xl:   clamp(18px, 1.1rem + 0.8vw, 24px);
     }
 
     html { scroll-behavior: smooth; }
@@ -35,10 +42,13 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: var(--text-base);
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      /* Vignette matching photo edge darkening */
+      background-image: radial-gradient(ellipse at center, #52575c 0%, #484c50 45%, #2e3134 100%);
+      background-attachment: fixed;
     }
 
     a { color: var(--accent); text-decoration: none; }
@@ -46,21 +56,23 @@
 
     .layout {
       display: flex;
-      gap: 24px;
-      max-width: 1100px;
+      gap: clamp(16px, 2vw, 28px);
+      max-width: min(1200px, 96vw);
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: clamp(20px, 3vw, 48px) clamp(12px, 2vw, 24px);
       align-items: flex-start;
       position: relative;
       z-index: 1;
     }
 
-    /* ── Sidebar ── */
     .sidebar {
       width: var(--sidebar-w);
+      min-width: 240px;
       flex-shrink: 0;
-      background: var(--bg-card);
-      border: 0.5px solid var(--border-h);
+      background: rgba(48, 52, 55, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(100, 100, 95, 0.4);
       border-radius: var(--radius);
       overflow: hidden;
       position: sticky;
@@ -74,8 +86,8 @@
     }
 
     .avatar {
-      width: 96px;
-      height: 96px;
+      width: clamp(72px, 8vw, 110px);
+      height: clamp(72px, 8vw, 110px);
       border-radius: 50%;
       background: var(--bg-2);
       border: 2px solid var(--border-h);
@@ -83,14 +95,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
+      font-size: clamp(24px, 3vw, 40px);
       font-weight: 600;
       color: var(--accent);
       font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
     }
 
     .sidebar-name {
-      font-size: 18px;
+      font-size: var(--text-lg);
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 8px;
@@ -103,7 +124,7 @@
       border-radius: 6px;
       padding: 4px 12px;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--text-xs);
       color: var(--text-dim);
       letter-spacing: 0.04em;
     }
@@ -137,7 +158,7 @@
 
     .contact-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: var(--text-xs);
       color: var(--text-dim);
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -145,7 +166,7 @@
     }
 
     .contact-val {
-      font-size: 12px;
+      font-size: var(--text-sm);
       color: var(--text-bright);
       font-weight: 500;
       word-break: break-word;
@@ -188,7 +209,7 @@
       color: #fff;
       border-radius: 8px;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--text-xs);
       letter-spacing: 0.04em;
       text-decoration: none;
       transition: background 0.15s;
@@ -199,14 +220,15 @@
 
     .resume-download:hover { background: var(--accent-glow); text-decoration: none; color: #fff; }
 
-    /* ── Main ── */
     .main { flex: 1; min-width: 0; }
 
     .tab-nav {
       display: flex;
       gap: 4px;
-      background: var(--bg-card);
-      border: 0.5px solid var(--border-h);
+      background: rgba(48, 52, 55, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 0.5px solid rgba(100, 100, 95, 0.3);
       border-radius: var(--radius);
       padding: 6px;
       margin-bottom: 24px;
@@ -221,7 +243,7 @@
       border: none;
       border-radius: 8px;
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--text-xs);
       color: var(--text-dim);
       letter-spacing: 0.05em;
       cursor: pointer;
@@ -235,7 +257,7 @@
     .panel.active { display: block; }
 
     .panel-title {
-      font-size: 22px;
+      font-size: var(--text-xl);
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 24px;
@@ -243,9 +265,8 @@
       border-bottom: 0.5px solid var(--border);
     }
 
-    /* ── About & Resume combined ── */
     .about-bio {
-      font-size: 14px;
+      font-size: var(--text-base);
       color: var(--text-dim);
       line-height: 1.85;
       margin-bottom: 36px;
@@ -257,14 +278,13 @@
 
     .resume-section-title {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: var(--text-xs);
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 20px;
     }
 
-    /* Timeline */
     .timeline { display: flex; flex-direction: column; }
 
     .timeline-item {
@@ -309,14 +329,14 @@
     }
 
     .timeline-title {
-      font-size: 14px;
+      font-size: var(--text-base);
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 2px;
     }
 
     .timeline-sub {
-      font-size: 12px;
+      font-size: var(--text-sm);
       color: var(--text-dim);
       margin-bottom: 6px;
     }
@@ -335,7 +355,7 @@
     }
 
     .timeline-bullet {
-      font-size: 12px;
+      font-size: var(--text-sm);
       color: var(--text-dim);
       line-height: 1.6;
       padding-left: 14px;
@@ -366,7 +386,6 @@
       color: var(--text-dim);
     }
 
-    /* Skill rows */
     .skill-rows { display: flex; flex-direction: column; }
 
     .skill-row-item {
@@ -391,12 +410,11 @@
     }
 
     .skill-row-vals {
-      font-size: 13px;
+      font-size: var(--text-sm);
       color: var(--text);
       font-weight: 500;
     }
 
-    /* ── Portfolio ── */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -404,8 +422,10 @@
     }
 
     .portfolio-card {
-      background: var(--bg-2);
-      border: 0.5px solid var(--border-h);
+      background: rgba(44, 47, 50, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 0.5px solid rgba(90, 88, 84, 0.35);
       border-radius: 12px;
       padding: 20px;
       transition: border-color 0.15s;
@@ -425,7 +445,7 @@
     }
 
     .card-title {
-      font-size: 14px;
+      font-size: var(--text-base);
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 8px;
@@ -433,7 +453,7 @@
     }
 
     .card-desc {
-      font-size: 12px;
+      font-size: var(--text-sm);
       color: var(--text-dim);
       line-height: 1.75;
       flex: 1;
@@ -463,12 +483,13 @@
       color: var(--accent);
     }
 
-    /* ── Papers ── */
     .papers-list { display: flex; flex-direction: column; gap: 14px; }
 
     .paper-row {
-      background: var(--bg-2);
-      border: 0.5px solid var(--border-h);
+      background: rgba(44, 47, 50, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 0.5px solid rgba(90, 88, 84, 0.35);
       border-radius: 10px;
       padding: 18px 20px;
       display: flex;
@@ -481,7 +502,7 @@
     .paper-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
     .paper-title {
-      font-size: 13px;
+      font-size: var(--text-sm);
       font-weight: 500;
       color: var(--text-bright);
       margin-bottom: 4px;
@@ -496,7 +517,6 @@
 
     .paper-meta a { color: var(--accent); }
 
-    /* ── Neural canvas ── */
     #neural-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -507,9 +527,15 @@
     }
 
     @media (max-width: 768px) {
-      .layout { flex-direction: column; padding: 16px; }
-      .sidebar { width: 100%; position: static; }
+      .layout { flex-direction: column; padding: 14px; gap: 14px; }
+      .sidebar { width: 100%; position: static; min-width: unset; }
       #neural-canvas { display: none; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 1400px) {
+      :root { --sidebar-w: 340px; }
+      .layout { max-width: 1300px; }
     }
   </style>
 </head>
@@ -519,10 +545,11 @@
 
 <div class="layout">
 
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-top">
-      <div class="avatar">JK</div>
+      <div class="avatar">
+        <img src="profile1.png" alt="Jawad Khattak" onerror="this.style.display='none';this.parentNode.innerHTML='JK';" />
+      </div>
       <div class="sidebar-name">Jawad Khattak</div>
       <span class="sidebar-role">Data Analyst &middot; MSCS:ML</span>
     </div>
@@ -580,7 +607,6 @@
     </a>
   </aside>
 
-  <!-- Main -->
   <main class="main">
 
     <nav class="tab-nav">
@@ -589,10 +615,8 @@
       <button class="tab-btn" onclick="showTab('papers', this)">Papers</button>
     </nav>
 
-    <!-- About & Resume -->
     <div id="panel-about" class="panel active">
       <h2 class="panel-title">About Me</h2>
-
       <p class="about-bio">
         I'm a data analyst at <strong>Public Interest Registry</strong>, the nonprofit behind .org.
         My work spans production ML models, data pipelines, and behavioral analytics. I focus on
@@ -601,7 +625,6 @@
         concentrating in machine learning.
       </p>
 
-      <!-- Experience -->
       <div class="resume-section">
         <div class="resume-section-title">// experience</div>
         <div class="timeline">
@@ -633,7 +656,6 @@
         </div>
       </div>
 
-      <!-- Education -->
       <div class="resume-section">
         <div class="resume-section-title">// education</div>
         <div class="timeline">
@@ -673,7 +695,6 @@
         </div>
       </div>
 
-      <!-- Skills -->
       <div class="resume-section">
         <div class="resume-section-title">// skills</div>
         <div class="skill-rows">
@@ -713,11 +734,9 @@
       </div>
     </div>
 
-    <!-- Projects -->
     <div id="panel-portfolio" class="panel">
       <h2 class="panel-title">Projects</h2>
       <div class="portfolio-grid">
-
         <div class="portfolio-card">
           <div class="card-tag">ml &middot; production</div>
           <div class="card-title">Domain Renewal Prediction</div>
@@ -725,7 +744,6 @@
           <div class="card-pills"><span class="pill">xgboost</span><span class="pill">snowflake</span><span class="pill">aws lambda</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
         <div class="portfolio-card">
           <div class="card-tag">data engineering</div>
           <div class="card-title">Nonprofit Sector Database</div>
@@ -733,7 +751,6 @@
           <div class="card-pills"><span class="pill">snowflake</span><span class="pill">aws lambda</span><span class="pill">python</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
         <div class="portfolio-card">
           <div class="card-tag">computer vision</div>
           <div class="card-title">Brain Tumor MRI Classifier</div>
@@ -741,7 +758,6 @@
           <div class="card-pills"><span class="pill">pytorch</span><span class="pill">cnn</span><span class="pill">kaggle</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
         <div class="portfolio-card">
           <div class="card-tag">ai tooling &middot; in progress</div>
           <div class="card-title">Claude MCP for Tableau</div>
@@ -749,7 +765,6 @@
           <div class="card-pills"><span class="pill">mcp</span><span class="pill">tableau</span><span class="pill">python</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
         <div class="portfolio-card">
           <div class="card-tag">nlp</div>
           <div class="card-title">Key-Value Memory Network</div>
@@ -757,7 +772,6 @@
           <div class="card-pills"><span class="pill">pytorch</span><span class="pill">nlp</span><span class="pill">attention</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
         <div class="portfolio-card">
           <div class="card-tag">bayesian stats</div>
           <div class="card-title">Developer Burnout Prediction</div>
@@ -765,15 +779,12 @@
           <div class="card-pills"><span class="pill">pymc</span><span class="pill">arviz</span><span class="pill">bayesian</span></div>
           <a class="card-link" href="#">github &rarr;</a>
         </div>
-
       </div>
     </div>
 
-    <!-- Papers -->
     <div id="panel-papers" class="panel">
       <h2 class="panel-title">OMSCS Papers</h2>
       <div class="papers-list">
-
         <div class="paper-row">
           <span class="paper-icon">📄</span>
           <div>
@@ -781,7 +792,6 @@
             <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; Literature Review &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
           </div>
         </div>
-
         <div class="paper-row">
           <span class="paper-icon">📄</span>
           <div>
@@ -789,7 +799,6 @@
             <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
           </div>
         </div>
-
         <div class="paper-row">
           <span class="paper-icon">📄</span>
           <div>
@@ -797,7 +806,6 @@
             <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
           </div>
         </div>
-
         <div class="paper-row">
           <span class="paper-icon">📄</span>
           <div>
@@ -805,7 +813,6 @@
             <div class="paper-meta">ISyE 6420 &middot; Bayesian Statistics &middot; 2026 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -823,20 +830,21 @@
 
   // ── Neuron ─────────────────────────────────────────────────────────────────
   const nCanvas = document.createElement('canvas');
-  nCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50;';
+  nCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10;';
   document.body.appendChild(nCanvas);
   const nc = nCanvas.getContext('2d');
-  function resizeNeuronCanvas() { nCanvas.width = window.innerWidth; nCanvas.height = window.innerHeight; }
+
+  // Declare initialized early so resizeNeuronCanvas can safely reference it
+  let initialized = false;
+  let avatarCX = 0, avatarCY = 0, avatarR = 0;
+
+  function resizeNeuronCanvas() {
+    nCanvas.width = window.innerWidth;
+    nCanvas.height = window.innerHeight;
+    if (initialized) setTimeout(() => { getAvatar(); buildPrimaryBranches(); }, 150);
+  }
   resizeNeuronCanvas();
   window.addEventListener('resize', resizeNeuronCanvas);
-
-  // ── Neuron ─────────────────────────────────────────────────────────────────
-  // Soma sits behind the avatar, dendrites grow organically outward
-
-  // Put neuron canvas BEHIND the layout (z-index 0 area) but above neural bg
-  nCanvas.style.zIndex = '10';
-
-  let avatarCX = 0, avatarCY = 0, avatarR = 0;
 
   function getAvatar() {
     const el = document.querySelector('.avatar');
@@ -847,15 +855,13 @@
     avatarR  = r.width / 2;
   }
 
-  // ── Dendrite branch (recursive tree) ──
-  // Each branch grows from a start point outward, then spawns children
   function makeBranch(opts) {
     return {
       sx: opts.sx, sy: opts.sy,
       angle: opts.angle,
       length: opts.length || (60 + Math.random() * 80),
-      grown: 0,           // 0..1 normal growth
-      overGrown: 0,       // 0..1 continued growth PAST length, drawn at low opacity
+      grown: 0,
+      overGrown: 0,
       growSpeed: opts.growSpeed || (0.006 + Math.random() * 0.005),
       overGrowSpeed: 0.003 + Math.random() * 0.002,
       curve: opts.curve !== undefined ? opts.curve : (Math.random() - 0.5) * 0.9,
@@ -873,9 +879,7 @@
     };
   }
 
-  // Compute tip position given grown amount — follows a gentle arc
   function branchTip(b, t) {
-    // Use a curved path: angle drifts by b.curve over the length
     const steps = 20;
     let x = b.sx, y = b.sy;
     let angle = b.angle;
@@ -889,7 +893,6 @@
     return { x, y, angle };
   }
 
-  // Draw a branch and its children recursively
   function drawBranch(b, frameCount, alpha) {
     if (!b.active && frameCount >= b.delay) b.active = true;
     if (!b.active) return;
@@ -899,19 +902,13 @@
     } else {
       if (b.grown < 1) b.grown = Math.min(1, b.grown + b.growSpeed);
     }
-
     if (b.grown <= 0) return;
 
-    // Draw curved branch as a series of small segments
     const steps = 24;
     const totalSteps = Math.floor(steps * b.grown);
     if (totalSteps < 1) return;
 
-    // Depth-based opacity: primary branches full, children increasingly faded
-    const depthAlpha = b.depth >= 4 ? 1.0
-                     : b.depth === 3 ? 0.55
-                     : b.depth === 2 ? 0.32
-                     : 0.18;
+    const depthAlpha = b.depth >= 4 ? 1.0 : b.depth === 3 ? 0.55 : b.depth === 2 ? 0.32 : 0.18;
     const baseAlpha = alpha * Math.min(b.grown * 2, 1) * depthAlpha;
     const lw = Math.max(0.4, (b.depth - 1) * 0.42);
     const col = neuronColor.line;
@@ -936,7 +933,6 @@
     nc.moveTo(x, y);
     for (let i = 0; i < totalSteps; i++) {
       angle += dAngle;
-      // add tiny random jitter for organic feel
       const jitter = (Math.random() - 0.5) * 0.04;
       x += Math.cos(angle + jitter) * stepLen;
       y += Math.sin(angle + jitter) * stepLen;
@@ -946,10 +942,8 @@
     nc.stroke();
     nc.restore();
 
-    // Store tip
     b.tipX = x; b.tipY = y;
 
-    // Tip dot
     if (b.grown >= 0.98 && b.depth <= 2) {
       nc.save();
       nc.globalAlpha = baseAlpha * 0.55;
@@ -958,16 +952,15 @@
       nc.restore();
     }
 
-    // Overgrowth extension — continues past the defined length at very low opacity
     if (b.grown >= 1 && !b.retracting) {
       b.overGrown = Math.min(1, b.overGrown + b.overGrowSpeed);
       if (b.overGrown > 0) {
-        const overLen = b.length * 0.6 * b.overGrown; // grows up to 60% extra
+        const overLen = b.length * 0.6 * b.overGrown;
         const overSteps = 16;
         let ox = x, oy = y, oAngle = angle;
-        const oDAngle = b.curve / steps * 0.5; // gentler curve on extension
+        const oDAngle = b.curve / steps * 0.5;
         nc.save();
-        nc.globalAlpha = depthAlpha * 0.14; // very low opacity
+        nc.globalAlpha = depthAlpha * 0.14;
         nc.strokeStyle = `rgba(${col},0.7)`;
         nc.lineWidth = lw * 0.6;
         nc.shadowBlur = 2;
@@ -984,7 +977,6 @@
       }
     }
 
-    // Spawn children when grown enough
     if (b.grown > 0.85 && !b.childrenSpawned && b.depth > 1 && !b.retracting) {
       b.childrenSpawned = true;
       const tip = branchTip(b, 1);
@@ -1002,13 +994,9 @@
       }
     }
 
-    if (b.retracting) {
-      b.children.forEach(c => { c.retracting = true; });
-    }
-
+    if (b.retracting) b.children.forEach(c => { c.retracting = true; });
     b.children.forEach(c => drawBranch(c, frameCount, alpha * 0.85));
 
-    // Signals
     b.signals = b.signals.filter(s => s.t <= 1.02);
     b.signals.forEach(s => {
       s.t += 0.02 + Math.random() * 0.005;
@@ -1022,53 +1010,36 @@
       g.addColorStop(0, `rgba(${neuronColor.signal},1)`);
       g.addColorStop(0.5, `rgba(${neuronColor.glow},0.5)`);
       g.addColorStop(1, `rgba(${neuronColor.glow},0)`);
-      nc.beginPath(); nc.arc(p.x, p.y, 6, 0, Math.PI * 2);
-      nc.fillStyle = g; nc.fill();
+      nc.beginPath(); nc.arc(p.x, p.y, 6, 0, Math.PI * 2); nc.fillStyle = g; nc.fill();
       nc.beginPath(); nc.arc(p.x, p.y, 2, 0, Math.PI * 2);
       nc.fillStyle = `rgba(${neuronColor.signal},0.95)`; nc.fill();
       nc.restore();
     });
 
-    // Occasionally fire a signal
-    if (b.grown > 0.6 && !b.retracting && Math.random() < 0.003) {
-      b.signals.push({ t: 0 });
-    }
+    if (b.grown > 0.6 && !b.retracting && Math.random() < 0.003) b.signals.push({ t: 0 });
   }
 
-  // ── Primary dendrites ──
-  // 8 main branches radiating from avatar edge at different angles
-  // Angles chosen to spread around the avatar without going through sidebar text
   let primaryBranches = [];
-  let initialized = false;
   let nTick = 0;
   let currentTab = 'about';
 
-  // Per-tab neuron color palette
   const TAB_COLORS = {
-    'about':     { line: '210,225,245', signal: '230,240,255', glow: '190,210,235' },
-    'portfolio': { line: '251,191,36',  signal: '253,224,71',  glow: '234,179,8'   },
-    'papers':    { line: '196,148,246', signal: '216,180,254', glow: '168,85,247'  },
+    'about':     { line: '245,242,238', signal: '255,252,248', glow: '210,205,198' },
+    'portfolio': { line: '220,185,120', signal: '240,210,150', glow: '180,145,80'  },
+    'papers':    { line: '180,165,210', signal: '210,195,240', glow: '145,130,175' },
   };
   let neuronColor = TAB_COLORS['about'];
 
-  // Scroll-driven growth multiplier (0..1)
-  // 0 = top of page, 1 = fully scrolled
-  let scrollGrowth = 0;
-  let targetScrollGrowth = 0;
-
+  let scrollGrowth = 0, targetScrollGrowth = 0;
   window.addEventListener('scroll', () => {
     const maxScroll = document.body.scrollHeight - window.innerHeight;
     targetScrollGrowth = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
   });
 
-  // Apply scroll growth to all branches recursively
-  // Also lowers the child spawn threshold so more children appear as you scroll
   function applyScrollGrowth(branch, baseGrowth, scrollBonus) {
     const maxAllowed = Math.min(baseGrowth + scrollBonus * 0.88, 1);
-    if (!branch.retracting && branch.grown < maxAllowed) {
+    if (!branch.retracting && branch.grown < maxAllowed)
       branch.grown = Math.min(branch.grown + branch.growSpeed * 2.0, maxAllowed);
-    }
-    // Spawn extra children at higher scroll levels if depth allows
     if (!branch.childrenSpawned && branch.grown > 0.7 && scrollBonus > 0.4 && branch.depth > 1 && !branch.retracting) {
       branch.childrenSpawned = true;
       const tip = { x: branch.tipX, y: branch.tipY };
@@ -1089,10 +1060,7 @@
     branch.children.forEach(c => applyScrollGrowth(c, baseGrowth, scrollBonus));
   }
 
-  // Per-tab branch personality
   const TAB_BRANCH_DEFS = {
-    // About & Resume: balanced spread, moderate curve, medium depth
-    // Feels like a calm, thorough thinker
     'about': [
       { angleDeg: -80,  len: 115, depth: 4, curve:  0.28, delay: 0,   childCount: 2, speed: 0.008 },
       { angleDeg: -50,  len: 130, depth: 4, curve: -0.18, delay: 18,  childCount: 2, speed: 0.007 },
@@ -1103,8 +1071,6 @@
       { angleDeg: 135,  len:  80, depth: 3, curve:  0.25, delay: 95,  childCount: 1, speed: 0.006 },
       { angleDeg:-120,  len:  70, depth: 3, curve: -0.18, delay: 110, childCount: 1, speed: 0.006 },
     ],
-    // Projects: fewer branches, longer and more aggressive — bold, reaching far
-    // Fast growth, strong rightward bias toward project cards
     'portfolio': [
       { angleDeg: -60,  len: 175, depth: 5, curve:  0.10, delay: 0,   childCount: 3, speed: 0.014 },
       { angleDeg: -25,  len: 195, depth: 5, curve: -0.08, delay: 12,  childCount: 3, speed: 0.016 },
@@ -1113,8 +1079,6 @@
       { angleDeg:  80,  len: 120, depth: 4, curve:  0.20, delay: 50,  childCount: 2, speed: 0.011 },
       { angleDeg:-100,  len:  85, depth: 3, curve: -0.25, delay: 65,  childCount: 1, speed: 0.010 },
     ],
-    // Papers: many fine branches, tighter curves, more recursive — dense academic texture
-    // Slower, more deliberate, lots of small offshoots
     'papers': [
       { angleDeg: -85,  len:  90, depth: 5, curve:  0.45, delay: 0,   childCount: 3, speed: 0.005 },
       { angleDeg: -60,  len: 100, depth: 5, curve: -0.38, delay: 10,  childCount: 3, speed: 0.005 },
@@ -1131,21 +1095,17 @@
 
   function buildPrimaryBranches() {
     getAvatar();
+    if (avatarR === 0) { setTimeout(buildPrimaryBranches, 100); return; }
     primaryBranches = [];
     const defs = TAB_BRANCH_DEFS[currentTab] || TAB_BRANCH_DEFS['about'];
-
     defs.forEach(def => {
       const rad = def.angleDeg * Math.PI / 180;
       const sx = avatarCX + Math.cos(rad) * (avatarR + 2);
       const sy = avatarCY + Math.sin(rad) * (avatarR + 2);
       primaryBranches.push(makeBranch({
-        sx, sy,
-        angle: rad,
-        length: def.len,
-        depth: def.depth,
-        curve: def.curve,
-        delay: def.delay,
-        childCount: def.childCount,
+        sx, sy, angle: rad,
+        length: def.len, depth: def.depth, curve: def.curve,
+        delay: def.delay, childCount: def.childCount,
         growSpeed: def.speed + Math.random() * 0.003,
       }));
     });
@@ -1169,6 +1129,7 @@
     nc.clearRect(0, 0, nCanvas.width, nCanvas.height);
     nTick++;
 
+    // Re-fetch avatar every frame for accurate tracking
     getAvatar();
 
     if (!initialized && nTick > 20) {
@@ -1176,56 +1137,50 @@
       buildPrimaryBranches();
     }
 
-    // ── Draw soma behind avatar ──
-    // Outer diffuse glow (large, very transparent)
-    nc.save();
-    const outerGlow = nc.createRadialGradient(avatarCX, avatarCY, avatarR * 0.5, avatarCX, avatarCY, avatarR * 2.2);
-    outerGlow.addColorStop(0, `rgba(${neuronColor.glow},0.18)`);
-    outerGlow.addColorStop(0.5, `rgba(${neuronColor.glow},0.08)`);
-    outerGlow.addColorStop(1, `rgba(${neuronColor.glow},0)`);
-    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR * 2.2, 0, Math.PI * 2);
-    nc.fillStyle = outerGlow; nc.fill(); nc.restore();
+    // Soma — drawn every frame using live avatar coords
+    if (avatarR > 0) {
+      const somaR = avatarR + 8;
 
-    // Soma disc — slightly larger than avatar, peeks out around edges
-    nc.save();
-    const somaG = nc.createRadialGradient(avatarCX - 4, avatarCY - 4, 2, avatarCX, avatarCY, avatarR + 10);
-    somaG.addColorStop(0, `rgba(${neuronColor.line},0.5)`);
-    somaG.addColorStop(0.5, `rgba(${neuronColor.glow},0.3)`);
-    somaG.addColorStop(1, `rgba(${neuronColor.glow},0.08)`);
-    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 10, 0, Math.PI * 2);
-    nc.fillStyle = somaG; nc.fill();
-    // Ring
-    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 10, 0, Math.PI * 2);
-    nc.strokeStyle = `rgba(${neuronColor.line},0.3)`; nc.lineWidth = 1.5; nc.stroke();
-    nc.restore();
+      // Outer diffuse glow
+      nc.save();
+      const outerGlow = nc.createRadialGradient(avatarCX, avatarCY, avatarR * 0.4, avatarCX, avatarCY, avatarR * 2.4);
+      outerGlow.addColorStop(0,   `rgba(${neuronColor.glow},0.20)`);
+      outerGlow.addColorStop(0.5, `rgba(${neuronColor.glow},0.08)`);
+      outerGlow.addColorStop(1,   `rgba(${neuronColor.glow},0)`);
+      nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR * 2.4, 0, Math.PI * 2);
+      nc.fillStyle = outerGlow; nc.fill(); nc.restore();
 
-    // Pulse ring
-    const pulse = (Math.sin(nTick * 0.035) + 1) * 0.5;
-    nc.save();
-    nc.globalAlpha = 0.08 + pulse * 0.1;
-    nc.beginPath(); nc.arc(avatarCX, avatarCY, avatarR + 14 + pulse * 8, 0, Math.PI * 2);
-    nc.strokeStyle = `rgba(${neuronColor.line},0.85)`; nc.lineWidth = 1; nc.stroke();
-    nc.restore();
+      // Soma disc
+      nc.save();
+      const somaG = nc.createRadialGradient(avatarCX - 3, avatarCY - 3, 1, avatarCX, avatarCY, somaR);
+      somaG.addColorStop(0,   `rgba(${neuronColor.line},0.45)`);
+      somaG.addColorStop(0.6, `rgba(${neuronColor.glow},0.22)`);
+      somaG.addColorStop(1,   `rgba(${neuronColor.glow},0.04)`);
+      nc.beginPath(); nc.arc(avatarCX, avatarCY, somaR, 0, Math.PI * 2);
+      nc.fillStyle = somaG; nc.fill();
+      nc.beginPath(); nc.arc(avatarCX, avatarCY, somaR, 0, Math.PI * 2);
+      nc.strokeStyle = `rgba(${neuronColor.line},0.25)`; nc.lineWidth = 1.2; nc.stroke();
+      nc.restore();
 
-    // ── Scroll-driven growth ──
-    // Smoothly interpolate scrollGrowth toward target
-    scrollGrowth += (targetScrollGrowth - scrollGrowth) * 0.06;
-
-    // Apply scroll bonus growth to all branches
-    if (scrollGrowth > 0.02) {
-      primaryBranches.forEach(b => applyScrollGrowth(b, 0.3, scrollGrowth));
+      // Pulse ring
+      const pulse = (Math.sin(nTick * 0.035) + 1) * 0.5;
+      nc.save();
+      nc.globalAlpha = 0.07 + pulse * 0.09;
+      nc.beginPath(); nc.arc(avatarCX, avatarCY, somaR + 4 + pulse * 9, 0, Math.PI * 2);
+      nc.strokeStyle = `rgba(${neuronColor.line},0.9)`; nc.lineWidth = 0.8; nc.stroke();
+      nc.restore();
     }
 
-    // ── Draw dendrites ──
-    primaryBranches.forEach(b => drawBranch(b, nTick, 1.0));
+    scrollGrowth += (targetScrollGrowth - scrollGrowth) * 0.06;
+    if (scrollGrowth > 0.02) primaryBranches.forEach(b => applyScrollGrowth(b, 0.3, scrollGrowth));
 
+    primaryBranches.forEach(b => drawBranch(b, nTick, 1.0));
     requestAnimationFrame(neuronTick);
   }
 
   neuronTick();
 
-
-  // ── Neural network — terminal green palette
+  // ── Neural network background ─────────────────────────────────────────────
   const canvas = document.getElementById('neural-canvas');
   const ctx = canvas.getContext('2d');
   let nodes = [], signals = [], W, H;
@@ -1268,7 +1223,6 @@
     });
     maybeFireSignal();
 
-    // edges
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
@@ -1276,40 +1230,36 @@
         const dist = Math.sqrt(dx*dx + dy*dy);
         if (dist < 180) {
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(74,222,128,${(1 - dist/180) * 0.15})`;
+          ctx.strokeStyle = `rgba(200,195,188,${(1 - dist/180) * 0.10})`;
           ctx.lineWidth = 0.8; ctx.stroke();
         }
       }
     }
 
-    // signals
     signals = signals.filter(s => s.t <= 1);
     signals.forEach(s => {
       s.t += 0.018;
       const px = s.ax + (s.bx - s.ax) * s.t;
       const py = s.ay + (s.by - s.ay) * s.t;
       const grad = ctx.createRadialGradient(px, py, 0, px, py, 10);
-      grad.addColorStop(0, 'rgba(74,222,128,0.9)');
-      grad.addColorStop(0.4, 'rgba(34,197,94,0.4)');
-      grad.addColorStop(1, 'rgba(34,197,94,0)');
-      ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2);
-      ctx.fillStyle = grad; ctx.fill();
+      grad.addColorStop(0, 'rgba(210,205,198,0.7)');
+      grad.addColorStop(0.4, 'rgba(180,175,168,0.3)');
+      grad.addColorStop(1, 'rgba(180,175,168,0)');
+      ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(187,247,208,0.95)'; ctx.fill();
+      ctx.fillStyle = 'rgba(230,225,218,0.85)'; ctx.fill();
     });
 
-    // nodes
     nodes.forEach(n => {
       const glow = 0.65 + 0.35 * Math.sin(n.pulse);
       const r = n.r * glow, alpha = n.brightness * glow;
       const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
-      grad.addColorStop(0, `rgba(74,222,128,${alpha * 0.45})`);
-      grad.addColorStop(0.5, `rgba(74,222,128,${alpha * 0.12})`);
-      grad.addColorStop(1, 'rgba(74,222,128,0)');
-      ctx.beginPath(); ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
-      ctx.fillStyle = grad; ctx.fill();
+      grad.addColorStop(0, `rgba(200,195,188,${alpha * 0.35})`);
+      grad.addColorStop(0.5, `rgba(180,175,168,${alpha * 0.10})`);
+      grad.addColorStop(1, 'rgba(108,142,191,0)');
+      ctx.beginPath(); ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(134,239,172,${alpha * 0.9})`; ctx.fill();
+      ctx.fillStyle = `rgba(195,190,183,${alpha * 0.7})`; ctx.fill();
     });
 
     requestAnimationFrame(draw);

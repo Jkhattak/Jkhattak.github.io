@@ -39,6 +39,7 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
+    /* Nav */
     nav {
       position: sticky;
       top: 0;
@@ -77,9 +78,26 @@
 
     .nav-links a:hover { color: var(--accent); text-decoration: none; }
 
+    /* Hero */
     #hero {
+      position: relative;
       padding: 96px 48px 72px;
-      max-width: 860px;
+      overflow: hidden;
+    }
+
+    #neural-canvas {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
     }
 
     .eyebrow {
@@ -113,7 +131,6 @@
       font-size: 14px;
       color: var(--text-dim);
       line-height: 1.85;
-      max-width: 580px;
     }
 
     .hero-bio strong { color: var(--text); font-weight: 500; }
@@ -153,6 +170,41 @@
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* Stat block */
+    .stat-block {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 520px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 12px;
+      gap: 16px;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      color: var(--text-dim);
+      flex-shrink: 0;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-val {
+      color: var(--text-bright);
+      font-weight: 500;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    /* Sections */
     section {
       padding: 56px 48px;
       border-top: 0.5px solid var(--border);
@@ -167,37 +219,7 @@
       margin-bottom: 32px;
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      max-width: 860px;
-    }
-
-    .about-text {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.9;
-    }
-
-    .about-text p + p { margin-top: 16px; }
-
-    .about-text strong { color: var(--text); font-weight: 500; }
-
-    .about-stats { display: flex; flex-direction: column; gap: 0; }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 11px 0;
-      border-bottom: 0.5px solid var(--border);
-      font-size: 12px;
-      gap: 16px;
-    }
-
-    .stat-label { color: var(--text-dim); flex-shrink: 0; }
-    .stat-val { color: var(--text-bright); font-weight: 500; text-align: right; }
-
+    /* Projects */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -273,35 +295,7 @@
       color: var(--accent);
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
-      max-width: 860px;
-    }
-
-    .skill-block {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border-hover);
-      border-radius: 6px;
-      padding: 16px 18px;
-    }
-
-    .skill-block-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .skill-list {
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 2.1;
-    }
-
+    /* Papers */
     .papers-list {
       display: flex;
       flex-direction: column;
@@ -323,8 +317,7 @@
     .paper-row:hover { border-color: var(--accent); }
 
     .paper-icon {
-      font-size: 20px;
-      color: var(--accent);
+      font-size: 18px;
       flex-shrink: 0;
       margin-top: 1px;
     }
@@ -345,19 +338,14 @@
 
     .paper-meta a { color: var(--accent); }
 
-    .blog-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      max-width: 700px;
-    }
-
+    /* Blog */
     .blog-placeholder {
       font-size: 13px;
       color: var(--text-dim);
       font-style: italic;
     }
 
+    /* Footer */
     footer {
       border-top: 0.5px solid var(--border);
       padding: 28px 48px;
@@ -388,13 +376,14 @@
 
     .footer-links a:hover { color: var(--accent); text-decoration: none; }
 
+    /* Responsive */
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
       .nav-links { gap: 18px; }
       #hero { padding: 60px 20px 48px; }
       h1 { font-size: 36px; }
       section { padding: 40px 20px; }
-      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      #neural-canvas { display: none; }
       footer { padding: 20px; flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -404,47 +393,75 @@
   <nav>
     <span class="nav-logo">jkhattak.github.io</span>
     <ul class="nav-links">
-      <li><a href="#about">about</a></li>
       <li><a href="#projects">projects</a></li>
-      <li><a href="#skills">skills</a></li>
       <li><a href="#papers">papers</a></li>
       <li><a href="#blog">blog</a></li>
+      <li><a href="https://github.com/jkhattak" target="_blank" rel="noopener">github</a></li>
     </ul>
   </nav>
 
-  <!-- Hero -->
+  <!-- Hero with neural network background -->
   <section id="hero" style="border-top: none;">
-    <div class="eyebrow">// data analyst &middot; omscs &middot; ml</div>
-    <h1>Jawad Khattak</h1>
-    <p class="hero-quote">"All models are wrong, but some are useful." &mdash; George Box</p>
-    <p class="hero-bio">
-      I'm a data analyst at Public Interest Registry, the nonprofit behind .org. 
-      My work tends to span well beyond the title. I've built and deployed a domain renewal prediction model using XGBoost 
-      that runs on a monthly production cadence, built a nonprofit database from scratch using Lambda functions, web scraping, 
-      and Snowflake pipelines, and done work on registrant behavior to understand who is actually buying domains and why. Currently 
-      building a Claude MCP integration for Tableau. Finishing an MS in Computer Science at Georgia Tech, concentrating in machine learning.
-    </p>
-    <div class="cta-row">
-      <a href="#projects"><button class="btn-primary">view projects</button></a>
-      <a href="https://github.com/jkhattak" target="_blank" rel="noopener"><button class="btn-ghost">github &rarr;</button></a>
-    </div>
+    <canvas id="neural-canvas"></canvas>
+    <div class="hero-content">
+      <div class="eyebrow">// data analyst &middot; omscs &middot; ml</div>
+      <h1>Jawad Khattak</h1>
+      <p class="hero-quote">"All models are wrong, but some are useful." &mdash; George Box</p>
+      <p class="hero-bio">
+        I'm a data analyst at <strong>Public Interest Registry</strong>, the nonprofit behind .org.
+        My work tends to span well beyond the title. I've built and deployed a domain renewal
+        prediction model using XGBoost that runs on a monthly production cadence, built a nonprofit
+        database from scratch using Lambda functions, web scraping, and Snowflake pipelines, and
+        done work on registrant behavior to understand who is actually buying domains and why.
+        Currently building a Claude MCP integration for Tableau. Finishing an
+        <strong>MS in Computer Science at Georgia Tech</strong>, concentrating in machine learning.
+      </p>
 
-      <div class="about-stats">
+      <div class="cta-row">
+        <a href="#projects"><button class="btn-primary">view projects</button></a>
+        <a href="https://github.com/jkhattak" target="_blank" rel="noopener"><button class="btn-ghost">github &rarr;</button></a>
+      </div>
+
+      <div class="stat-block">
         <div class="stat-row">
-          <span class="stat-label">Location</span>
+          <span class="stat-label">location</span>
           <span class="stat-val">Fairfax, VA</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Active Project</span>
+          <span class="stat-label">experience</span>
+          <span class="stat-val">Public Interest Registry &middot; 3 yrs (intern &rarr; full-time)</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">graduate</span>
+          <span class="stat-val">M.S. Computer Science, Georgia Tech</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">undergraduate</span>
+          <span class="stat-val">B.S. Computational Data Science &amp; Neuroscience, George Mason</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">languages</span>
+          <span class="stat-val">Python &middot; SQL &middot; Bash</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">ml stack</span>
+          <span class="stat-val">XGBoost &middot; PyTorch &middot; scikit-learn</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">infra</span>
+          <span class="stat-val">Snowflake &middot; AWS Lambda &middot; dbt</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">visualization</span>
+          <span class="stat-val">Tableau &middot; Matplotlib &middot; Seaborn</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">active project</span>
           <span class="stat-val">Brain Tumor MRI Classifier</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Currently Studying</span>
-          <span class="stat-val">MS Computer Science, Georgia Tech</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">Exploring</span>
-          <span class="stat-val">Deep Learning &middot; LLMs</span>
+          <span class="stat-label">exploring</span>
+          <span class="stat-val">Deep Learning &middot; Algorithms &middot; MCP</span>
         </div>
       </div>
     </div>
@@ -566,42 +583,6 @@
     </div>
   </section>
 
-  <!-- Skills -->
-  <section id="skills">
-    <div class="section-label">// skills</div>
-    <div class="skills-grid">
-
-      <div class="skill-block">
-        <div class="skill-block-label">languages</div>
-        <div class="skill-list">
-          Python<br>SQL<br>Bash
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <div class="skill-block-label">tools &amp; infra</div>
-        <div class="skill-list">
-          Snowflake<br>AWS Lambda<br>Git / Linux
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <div class="skill-block-label">ml libraries</div>
-        <div class="skill-list">
-          XGBoost<br>PyTorch<br>scikit-learn<br>NumPy / Pandas
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <div class="skill-block-label">visualization</div>
-        <div class="skill-list">
-          Tableau<br>Matplotlib<br>Seaborn
-        </div>
-      </div>
-
-    </div>
-  </section>
-
   <!-- Papers -->
   <section id="papers">
     <div class="section-label">// omscs papers</div>
@@ -645,9 +626,7 @@
   <!-- Blog -->
   <section id="blog">
     <div class="section-label">// blog</div>
-    <div class="blog-list">
-      <p class="blog-placeholder">Posts coming soon. Writing about ML in production, algorithms, and OMSCS.</p>
-    </div>
+    <p class="blog-placeholder">Posts coming soon. Writing about ML in production, algorithms, and OMSCS.</p>
   </section>
 
   <!-- Footer -->
@@ -659,6 +638,81 @@
       <a href="mailto:you@email.com">email</a>
     </div>
   </footer>
+
+  <script>
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let nodes = [];
+    let edges = [];
+    let W, H;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      init();
+    }
+
+    function init() {
+      nodes = [];
+      edges = [];
+      const count = 28;
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2.5 + 1.5,
+          pulse: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      nodes.forEach(n => {
+        n.x += n.vx;
+        n.y += n.vy;
+        n.pulse += 0.018;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const maxDist = 160;
+          if (dist < maxDist) {
+            const alpha = (1 - dist / maxDist) * 0.45;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(88, 166, 255, ${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach(n => {
+        const glow = 0.7 + 0.3 * Math.sin(n.pulse);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * glow, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(88, 166, 255, ${0.6 * glow})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  </script>
 
 </body>
 </html>

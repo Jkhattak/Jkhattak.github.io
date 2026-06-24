@@ -11,18 +11,32 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0d0f14;
-      --bg-card:  #161b22;
-      --bg-hover: #1c2128;
-      --border:   #21262d;
+      --bg:           #0d0f14;
+      --bg-card:      #161b22;
+      --bg-hover:     #1c2128;
+      --border:       #21262d;
       --border-hover: #30363d;
-      --text:     #c9d1d9;
-      --text-dim: #8b949e;
-      --text-bright: #f0f6fc;
-      --accent:   #58a6ff;
-      --accent-dim: #1f6feb;
+      --text:         #c9d1d9;
+      --text-dim:     #8b949e;
+      --text-bright:  #f0f6fc;
+      --accent:       #58a6ff;
+      --accent-dim:   #1f6feb;
       --mono: 'JetBrains Mono', 'Courier New', monospace;
       --sans: 'Inter', system-ui, sans-serif;
+
+      /* Fluid type scale */
+      --step--1: clamp(0.69rem, 0.65rem + 0.18vw, 0.80rem);
+      --step-0:  clamp(0.83rem, 0.76rem + 0.33vw, 1.00rem);
+      --step-1:  clamp(1.00rem, 0.89rem + 0.54vw, 1.25rem);
+      --step-2:  clamp(1.20rem, 1.04rem + 0.81vw, 1.56rem);
+      --step-3:  clamp(1.44rem, 1.21rem + 1.14vw, 1.95rem);
+      --step-4:  clamp(2.00rem, 1.60rem + 2.00vw, 3.25rem);
+
+      /* Fluid space */
+      --space-s:  clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+      --space-m:  clamp(1.25rem, 0.9rem + 1.75vw, 2.5rem);
+      --space-l:  clamp(2rem, 1.4rem + 3vw, 4.5rem);
+      --space-xl: clamp(3rem, 2rem + 5vw, 7rem);
     }
 
     html { scroll-behavior: smooth; }
@@ -31,7 +45,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: 14px;
+      font-size: var(--step-0);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
@@ -39,7 +53,7 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Nav */
+    /* ── Nav ── */
     nav {
       position: sticky;
       top: 0;
@@ -47,15 +61,17 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 48px;
+      padding: 16px var(--space-m);
       background: rgba(13, 15, 20, 0.92);
       backdrop-filter: blur(8px);
       border-bottom: 0.5px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .nav-logo {
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: var(--step--1);
       color: var(--accent);
       font-weight: 500;
       letter-spacing: 0.02em;
@@ -63,13 +79,14 @@
 
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: clamp(14px, 2vw, 32px);
       list-style: none;
+      flex-wrap: wrap;
     }
 
     .nav-links a {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--step--1);
       color: var(--text-dim);
       letter-spacing: 0.06em;
       text-transform: lowercase;
@@ -78,10 +95,10 @@
 
     .nav-links a:hover { color: var(--accent); text-decoration: none; }
 
-    /* Hero */
+    /* ── Hero ── */
     #hero {
       position: relative;
-      padding: 96px 48px 72px;
+      padding: var(--space-xl) var(--space-m) var(--space-l);
       overflow: hidden;
     }
 
@@ -97,21 +114,21 @@
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 580px;
+      max-width: min(580px, 100%);
     }
 
     .eyebrow {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--step--1);
       color: var(--accent);
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin-bottom: 22px;
+      margin-bottom: var(--space-s);
     }
 
     h1 {
       font-family: var(--sans);
-      font-size: 52px;
+      font-size: var(--step-4);
       font-weight: 600;
       color: var(--text-bright);
       line-height: 1.05;
@@ -121,14 +138,14 @@
 
     .hero-quote {
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: var(--step--1);
       color: var(--text-dim);
-      margin-bottom: 28px;
+      margin-bottom: var(--space-s);
       font-style: italic;
     }
 
     .hero-bio {
-      font-size: 14px;
+      font-size: var(--step-0);
       color: var(--text-dim);
       line-height: 1.85;
     }
@@ -138,7 +155,7 @@
     .cta-row {
       display: flex;
       gap: 12px;
-      margin-top: 36px;
+      margin-top: var(--space-m);
       flex-wrap: wrap;
     }
 
@@ -149,7 +166,7 @@
       padding: 10px 22px;
       border-radius: 6px;
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: var(--step--1);
       cursor: pointer;
       letter-spacing: 0.04em;
       transition: background 0.15s;
@@ -163,37 +180,37 @@
       padding: 10px 22px;
       border-radius: 6px;
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: var(--step--1);
       cursor: pointer;
       letter-spacing: 0.04em;
       transition: border-color 0.15s, color 0.15s;
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Stat block */
+    /* ── Stat block ── */
     .stat-block {
-      margin-top: 40px;
+      margin-top: var(--space-m);
       display: flex;
       flex-direction: column;
-      gap: 0;
-      max-width: 520px;
+      max-width: min(560px, 100%);
       border-top: 0.5px solid var(--border);
     }
 
     .stat-row {
       display: flex;
       justify-content: space-between;
+      align-items: baseline;
       padding: 10px 0;
       border-bottom: 0.5px solid var(--border);
-      font-size: 12px;
       gap: 16px;
+      flex-wrap: wrap;
     }
 
     .stat-label {
       font-family: var(--mono);
       color: var(--text-dim);
       flex-shrink: 0;
-      font-size: 11px;
+      font-size: var(--step--1);
       letter-spacing: 0.04em;
     }
 
@@ -201,37 +218,39 @@
       color: var(--text-bright);
       font-weight: 500;
       text-align: right;
-      font-size: 12px;
+      font-size: var(--step--1);
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
     }
 
-    /* Sections */
+    /* ── Sections ── */
     section {
-      padding: 56px 48px;
+      padding: var(--space-l) var(--space-m);
       border-top: 0.5px solid var(--border);
     }
 
     .section-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1vw, 11px);
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 32px;
+      margin-bottom: var(--space-m);
     }
 
-    /* Projects */
+    /* ── Projects ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
       gap: 16px;
-      max-width: 1000px;
     }
 
     .project-card {
       background: var(--bg-card);
       border: 0.5px solid var(--border-hover);
       border-radius: 8px;
-      padding: 22px;
+      padding: clamp(14px, 2vw, 22px);
       transition: border-color 0.15s, background 0.15s;
       display: flex;
       flex-direction: column;
@@ -244,7 +263,7 @@
 
     .card-tag {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1vw, 10px);
       color: var(--accent);
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -252,7 +271,7 @@
     }
 
     .card-title {
-      font-size: 14px;
+      font-size: var(--step-0);
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 8px;
@@ -260,7 +279,7 @@
     }
 
     .card-desc {
-      font-size: 12px;
+      font-size: var(--step--1);
       color: var(--text-dim);
       line-height: 1.75;
       flex: 1;
@@ -277,7 +296,7 @@
       background: #1a2030;
       color: var(--text-dim);
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: clamp(9px, 1vw, 10px);
       padding: 3px 9px;
       border-radius: 20px;
       border: 0.5px solid var(--border-hover);
@@ -291,23 +310,22 @@
 
     .card-links a {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--step--1);
       color: var(--accent);
     }
 
-    /* Papers */
+    /* ── Papers ── */
     .papers-list {
       display: flex;
       flex-direction: column;
       gap: 14px;
-      max-width: 760px;
     }
 
     .paper-row {
       background: var(--bg-card);
       border: 0.5px solid var(--border-hover);
       border-radius: 8px;
-      padding: 20px 22px;
+      padding: clamp(14px, 2vw, 20px) clamp(14px, 2vw, 22px);
       display: flex;
       gap: 18px;
       align-items: flex-start;
@@ -323,7 +341,7 @@
     }
 
     .paper-title {
-      font-size: 13px;
+      font-size: var(--step-0);
       font-weight: 500;
       color: var(--text-bright);
       margin-bottom: 5px;
@@ -331,24 +349,24 @@
     }
 
     .paper-meta {
-      font-size: 11px;
+      font-size: var(--step--1);
       color: var(--text-dim);
       font-family: var(--mono);
     }
 
     .paper-meta a { color: var(--accent); }
 
-    /* Blog */
+    /* ── Blog ── */
     .blog-placeholder {
-      font-size: 13px;
+      font-size: var(--step-0);
       color: var(--text-dim);
       font-style: italic;
     }
 
-    /* Footer */
+    /* ── Footer ── */
     footer {
       border-top: 0.5px solid var(--border);
-      padding: 28px 48px;
+      padding: 28px var(--space-m);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -358,33 +376,30 @@
 
     .footer-note {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--step--1);
       color: #484f58;
     }
 
     .footer-links {
       display: flex;
       gap: 24px;
+      flex-wrap: wrap;
     }
 
     .footer-links a {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: var(--step--1);
       color: var(--text-dim);
       transition: color 0.15s;
     }
 
     .footer-links a:hover { color: var(--accent); text-decoration: none; }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      nav { padding: 14px 20px; }
-      .nav-links { gap: 18px; }
-      #hero { padding: 60px 20px 48px; }
-      h1 { font-size: 36px; }
-      section { padding: 40px 20px; }
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
       #neural-canvas { display: none; }
-      footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+      .stat-row { flex-direction: column; gap: 4px; }
+      .stat-val { text-align: left; }
     }
   </style>
 </head>
@@ -400,7 +415,7 @@
     </ul>
   </nav>
 
-  <!-- Hero with neural network background -->
+  <!-- Hero -->
   <section id="hero" style="border-top: none;">
     <canvas id="neural-canvas"></canvas>
     <div class="hero-content">
@@ -424,43 +439,43 @@
 
       <div class="stat-block">
         <div class="stat-row">
-          <span class="stat-label">Location</span>
+          <span class="stat-label">location</span>
           <span class="stat-val">Fairfax, VA</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Experience</span>
+          <span class="stat-label">experience</span>
           <span class="stat-val">Public Interest Registry &middot; 3 yrs (intern &rarr; full-time)</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Graduate Degree</span>
+          <span class="stat-label">graduate degree</span>
           <span class="stat-val">M.S. Computer Science, Georgia Tech</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Undergraduate Degree</span>
+          <span class="stat-label">undergraduate degree</span>
           <span class="stat-val">B.S. Computational Data Science &amp; Neuroscience, George Mason</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Programming languages</span>
+          <span class="stat-label">programming languages</span>
           <span class="stat-val">Python &middot; SQL &middot; Bash</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">AI (ML, DL, NLP) stack</span>
-          <span class="stat-val">PyTorch &middot; scikit-learn &middot; Pandas &middot; Numpy &middot;  </span>
+          <span class="stat-label">ai (ml, dl, nlp) stack</span>
+          <span class="stat-val">PyTorch &middot; scikit-learn &middot; Pandas &middot; NumPy</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Infra</span>
-          <span class="stat-val">Snowflake &middot; AWS &middot; AWS Lambda &middot;AWS EventBridge</span>
+          <span class="stat-label">infra</span>
+          <span class="stat-val">Snowflake &middot; AWS Lambda &middot; AWS EventBridge</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Visualization</span>
+          <span class="stat-label">visualization</span>
           <span class="stat-val">Tableau &middot; Matplotlib &middot; Seaborn</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Active project</span>
+          <span class="stat-label">active project</span>
           <span class="stat-val">Brain Tumor MRI Classifier</span>
         </div>
         <div class="stat-row">
-          <span class="stat-label">Currently Exploring</span>
+          <span class="stat-label">currently exploring</span>
           <span class="stat-val">Deep Learning &middot; Algorithms &middot; MCP</span>
         </div>
       </div>
@@ -642,20 +657,12 @@
   <script>
     const canvas = document.getElementById('neural-canvas');
     const ctx = canvas.getContext('2d');
-
-    let nodes = [];
-    let edges = [];
-    let W, H;
+    let nodes = [], W, H;
 
     function resize() {
       W = canvas.width  = canvas.offsetWidth;
       H = canvas.height = canvas.offsetHeight;
-      init();
-    }
-
-    function init() {
       nodes = [];
-      edges = [];
       const count = 28;
       for (let i = 0; i < count; i++) {
         nodes.push({
@@ -671,41 +678,34 @@
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-
       nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        n.pulse += 0.018;
+        n.x += n.vx; n.y += n.vy; n.pulse += 0.018;
         if (n.x < 0 || n.x > W) n.vx *= -1;
         if (n.y < 0 || n.y > H) n.vy *= -1;
       });
-
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const a = nodes[i], b = nodes[j];
           const dx = a.x - b.x, dy = a.y - b.y;
           const dist = Math.sqrt(dx*dx + dy*dy);
-          const maxDist = 160;
-          if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.45;
+          if (dist < 160) {
+            const alpha = (1 - dist / 160) * 0.45;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(88, 166, 255, ${alpha})`;
+            ctx.strokeStyle = `rgba(88,166,255,${alpha})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
       }
-
       nodes.forEach(n => {
         const glow = 0.7 + 0.3 * Math.sin(n.pulse);
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * glow, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(88, 166, 255, ${0.6 * glow})`;
+        ctx.fillStyle = `rgba(88,166,255,${0.6 * glow})`;
         ctx.fill();
       });
-
       requestAnimationFrame(draw);
     }
 

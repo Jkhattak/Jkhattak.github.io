@@ -1153,8 +1153,8 @@
       // Soma disc
       nc.save();
       const somaG = nc.createRadialGradient(avatarCX - 3, avatarCY - 3, 1, avatarCX, avatarCY, somaR);
-      somaG.addColorStop(0,   `rgba(${neuronColor.line},0.20)`);
-      somaG.addColorStop(0.6, `rgba(${neuronColor.glow},0.22)`);
+      somaG.addColorStop(0,   `rgba(${neuronColor.line},0.10)`);
+      somaG.addColorStop(0.6, `rgba(${neuronColor.glow},0.10)`);
       somaG.addColorStop(1,   `rgba(${neuronColor.glow},0.04)`);
       nc.beginPath(); nc.arc(avatarCX, avatarCY, somaR, 0, Math.PI * 2);
       nc.fillStyle = somaG; nc.fill();

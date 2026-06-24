@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jawad Khattak · Analytics Engineer & ML Practitioner</title>
+  <title>Jawad Khattak · Data Analyst & ML</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -39,7 +39,6 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── Nav ── */
     nav {
       position: sticky;
       top: 0;
@@ -78,7 +77,6 @@
 
     .nav-links a:hover { color: var(--accent); text-decoration: none; }
 
-    /* ── Hero ── */
     #hero {
       padding: 96px 48px 72px;
       max-width: 860px;
@@ -103,10 +101,12 @@
       letter-spacing: -0.02em;
     }
 
-    .hero-role {
-      font-size: 16px;
+    .hero-quote {
+      font-family: var(--mono);
+      font-size: 12px;
       color: var(--text-dim);
       margin-bottom: 28px;
+      font-style: italic;
     }
 
     .hero-bio {
@@ -153,7 +153,6 @@
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── Sections ── */
     section {
       padding: 56px 48px;
       border-top: 0.5px solid var(--border);
@@ -168,7 +167,6 @@
       margin-bottom: 32px;
     }
 
-    /* ── About ── */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -181,6 +179,8 @@
       color: var(--text-dim);
       line-height: 1.9;
     }
+
+    .about-text p + p { margin-top: 16px; }
 
     .about-text strong { color: var(--text); font-weight: 500; }
 
@@ -198,7 +198,6 @@
     .stat-label { color: var(--text-dim); flex-shrink: 0; }
     .stat-val { color: var(--text-bright); font-weight: 500; text-align: right; }
 
-    /* ── Projects ── */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -274,7 +273,6 @@
       color: var(--accent);
     }
 
-    /* ── Skills ── */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -304,7 +302,6 @@
       line-height: 2.1;
     }
 
-    /* ── Papers ── */
     .papers-list {
       display: flex;
       flex-direction: column;
@@ -348,36 +345,11 @@
 
     .paper-meta a { color: var(--accent); }
 
-    /* ── Blog ── */
     .blog-list {
       display: flex;
       flex-direction: column;
       gap: 0;
       max-width: 700px;
-    }
-
-    .blog-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 16px 0;
-      border-bottom: 0.5px solid var(--border);
-      gap: 24px;
-    }
-
-    .blog-title {
-      font-size: 13px;
-      color: var(--text);
-      transition: color 0.15s;
-    }
-
-    .blog-row:hover .blog-title { color: var(--accent); }
-
-    .blog-date {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-dim);
-      flex-shrink: 0;
     }
 
     .blog-placeholder {
@@ -386,7 +358,6 @@
       font-style: italic;
     }
 
-    /* ── Footer ── */
     footer {
       border-top: 0.5px solid var(--border);
       padding: 28px 48px;
@@ -417,7 +388,6 @@
 
     .footer-links a:hover { color: var(--accent); text-decoration: none; }
 
-    /* ── Responsive ── */
     @media (max-width: 640px) {
       nav { padding: 14px 20px; }
       .nav-links { gap: 18px; }
@@ -444,14 +414,14 @@
 
   <!-- Hero -->
   <section id="hero" style="border-top: none;">
-    <div class="eyebrow">// Data Analyst· omscs</div>
+    <div class="eyebrow">// data analyst &middot; omscs &middot; ml</div>
     <h1>Jawad Khattak</h1>
-    <p class="hero-role">"All models are wrong, but some are useful." — George Box </p>
+    <p class="hero-quote">"All models are wrong, but some are useful." &mdash; George Box</p>
     <p class="hero-bio">
-      Analytics engineer and ML practitioner working at a domain registrar,
-      where I own <strong>production churn prediction models, behavioral segmentation
-      pipelines, and Snowflake data infrastructure</strong>. Completing my OMSCS
-      degree at Georgia Tech &mdash; one course left: Graduate Algorithms (CS&nbsp;6515).
+      I'm a data analyst at <strong>Public Interest Registry</strong>, the nonprofit behind .org.
+      My work tends to span well beyond the title, from building production ML models
+      to Snowflake pipelines to Lambda functions. Currently finishing an
+      <strong>MS in Computer Science at Georgia Tech</strong>, concentrating in machine learning.
     </p>
     <div class="cta-row">
       <a href="#projects"><button class="btn-primary">view projects</button></a>
@@ -463,36 +433,88 @@
   <section id="about">
     <div class="section-label">// about</div>
     <div class="about-grid">
-      <p class="about-text">
-I'm a data analyst at Public Interest Registry, the nonprofit behind .org. My work tends to be pretty varied. I built and deployed a domain renewal prediction model using XGBoost, which now runs on a monthly cadence and feeds into how we think about growth. I also built a nonprofit database from scratch, pulling in data through Lambda functions and web scraping, setting up Snowflake pipelines, and joining it against our internal data to help the business understand how .org fits into the broader nonprofit landscape across the US and UK. I've done work on registrant behavior too, trying to understand who is actually buying domains and why. Currently I'm building a Claude MCP integration for Tableau, which lets an AI agent interact directly with our dashboards.
-I'm also finishing up an MS in Computer Science at Georgia Tech, concentrating in machine learning.
-      </p>
-      
-  <div class="about-stats">
-    <div class="stat-row">
-      <span class="stat-label">location</span>
-      <span class="stat-val">Reston, VA</span>
+      <div class="about-text">
+        <p>
+          I'm a data analyst at Public Interest Registry, the nonprofit behind .org.
+          My work tends to be pretty varied. I built and deployed a domain renewal
+          prediction model using XGBoost, which now runs on a monthly cadence and
+          feeds into how we think about growth. I also built a nonprofit database
+          from scratch, pulling in data through Lambda functions and web scraping,
+          setting up Snowflake pipelines, and joining it against our internal data
+          to help the business understand how .org fits into the broader nonprofit
+          landscape across the US and UK. I've done work on registrant behavior too,
+          trying to understand who is actually buying domains and why. Currently I'm
+          building a Claude MCP integration for Tableau, which lets an AI agent
+          interact directly with our dashboards.
+        </p>
+        <p>
+          I'm also finishing up an MS in Computer Science at Georgia Tech,
+          concentrating in machine learning.
+        </p>
+      </div>
+
+      <div class="about-stats">
+        <div class="stat-row">
+          <span class="stat-label">location</span>
+          <span class="stat-val">Reston, VA</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">active project</span>
+          <span class="stat-val">Brain Tumor MRI Classifier</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">currently</span>
+          <span class="stat-val">MS Computer Science, Georgia Tech</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">exploring</span>
+          <span class="stat-val">Deep Learning &middot; Algorithms &middot; MCP</span>
+        </div>
+      </div>
     </div>
-    <div class="stat-row">
-      <span class="stat-label">active project</span>
-      <span class="stat-val">Brain Tumor MRI Classifier</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">currently</span>
-      <span class="stat-val">MS Computer Science, Georgia Tech</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">exploring</span>
-      <span class="stat-val">Deep Learning &middot; Algorithms &middot; MCP</span>
-    </div>
-  </div>
-    
   </section>
 
   <!-- Projects -->
   <section id="projects">
     <div class="section-label">// projects</div>
     <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="card-tag">ml &middot; production</div>
+        <div class="card-title">Domain Renewal Prediction</div>
+        <div class="card-desc">
+          End-to-end XGBoost pipeline: Snowflake cohort extraction, behavioral
+          feature engineering with percentile-based segmentation, risk tier
+          scoring, and Snowflake writebacks. Runs on a monthly production cadence.
+          0.91 out-of-sample AUC.
+        </div>
+        <div class="card-footer">
+          <span class="pill">xgboost</span>
+          <span class="pill">snowflake</span>
+          <span class="pill">aws lambda</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-tag">data engineering</div>
+        <div class="card-title">Nonprofit Sector Database</div>
+        <div class="card-desc">
+          Built a unified nonprofit database from scratch using Lambda functions,
+          web scraping, and Snowflake pipelines. Joined against internal data to
+          map how .org contributes to nonprofit growth across the US and UK.
+        </div>
+        <div class="card-footer">
+          <span class="pill">snowflake</span>
+          <span class="pill">aws lambda</span>
+          <span class="pill">python</span>
+        </div>
+        <div class="card-links">
+          <a href="#">github &rarr;</a>
+        </div>
+      </div>
 
       <div class="project-card">
         <div class="card-tag">computer vision</div>
@@ -513,17 +535,17 @@ I'm also finishing up an MS in Computer Science at Georgia Tech, concentrating i
       </div>
 
       <div class="project-card">
-        <div class="card-tag">ml &middot; production</div>
-        <div class="card-title">Domain Churn Prediction</div>
+        <div class="card-tag">ai tooling &middot; in progress</div>
+        <div class="card-title">Claude MCP for Tableau</div>
         <div class="card-desc">
-          End-to-end XGBoost pipeline: Snowflake cohort extraction, behavioral
-          feature engineering with percentile-based segmentation, risk tier
-          scoring, and Snowflake writebacks. 0.91 out-of-sample AUC.
+          Building an MCP integration that lets a Claude AI agent interact
+          directly with Tableau dashboards, enabling natural language querying
+          of business data.
         </div>
         <div class="card-footer">
-          <span class="pill">xgboost</span>
-          <span class="pill">snowflake</span>
-          <span class="pill">aws lambda</span>
+          <span class="pill">mcp</span>
+          <span class="pill">tableau</span>
+          <span class="pill">python</span>
         </div>
         <div class="card-links">
           <a href="#">github &rarr;</a>
@@ -590,14 +612,7 @@ I'm also finishing up an MS in Computer Science at Georgia Tech, concentrating i
       <div class="skill-block">
         <div class="skill-block-label">data infra</div>
         <div class="skill-list">
-          Snowflake<br>dbt<br>AWS Lambda<br>Tableau
-        </div>
-      </div>
-
-      <div class="skill-block">
-        <div class="skill-block-label">cs foundations</div>
-        <div class="skill-list">
-          Algorithms &amp; DS<br>Bayesian Stats<br>NLP<br>Cognitive Science
+          Snowflake<br>AWS Lambda<br>dbt<br>Tableau
         </div>
       </div>
 
@@ -605,6 +620,13 @@ I'm also finishing up an MS in Computer Science at Georgia Tech, concentrating i
         <div class="skill-block-label">tooling</div>
         <div class="skill-list">
           Git<br>Linux<br>VS Code<br>Jupyter
+        </div>
+      </div>
+
+      <div class="skill-block">
+        <div class="skill-block-label">exploring</div>
+        <div class="skill-list">
+          Deep Learning<br>Algorithms<br>MCP / AI Agents
         </div>
       </div>
 
@@ -655,13 +677,13 @@ I'm also finishing up an MS in Computer Science at Georgia Tech, concentrating i
   <section id="blog">
     <div class="section-label">// blog</div>
     <div class="blog-list">
-      <p class="blog-placeholder">Posts coming soon &mdash; writing about ML in production, algorithms study, and OMSCS coursework.</p>
+      <p class="blog-placeholder">Posts coming soon. Writing about ML in production, algorithms, and OMSCS.</p>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <span class="footer-note">jkhattak.github.io &mdash; built with html &amp; css</span>
+    <span class="footer-note">jkhattak.github.io &middot; built with html and css</span>
     <div class="footer-links">
       <a href="https://github.com/jkhattak" target="_blank" rel="noopener">github</a>
       <a href="https://linkedin.com/in/jkhattak" target="_blank" rel="noopener">linkedin</a>

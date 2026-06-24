@@ -13,30 +13,18 @@
     :root {
       --bg:           #0d0f14;
       --bg-card:      #161b22;
-      --bg-hover:     #1c2128;
+      --bg-2:         #1c2128;
       --border:       #21262d;
-      --border-hover: #30363d;
+      --border-h:     #30363d;
       --text:         #c9d1d9;
       --text-dim:     #8b949e;
       --text-bright:  #f0f6fc;
       --accent:       #58a6ff;
       --accent-dim:   #1f6feb;
-      --mono: 'JetBrains Mono', 'Courier New', monospace;
+      --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
-
-      /* Fluid type scale */
-      --step--1: clamp(0.69rem, 0.65rem + 0.18vw, 0.80rem);
-      --step-0:  clamp(0.83rem, 0.76rem + 0.33vw, 1.00rem);
-      --step-1:  clamp(1.00rem, 0.89rem + 0.54vw, 1.25rem);
-      --step-2:  clamp(1.20rem, 1.04rem + 0.81vw, 1.56rem);
-      --step-3:  clamp(1.44rem, 1.21rem + 1.14vw, 1.95rem);
-      --step-4:  clamp(2.00rem, 1.60rem + 2.00vw, 3.25rem);
-
-      /* Fluid space */
-      --space-s:  clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
-      --space-m:  clamp(1.25rem, 0.9rem + 1.75vw, 2.5rem);
-      --space-l:  clamp(2rem, 1.4rem + 3vw, 4.5rem);
-      --space-xl: clamp(3rem, 2rem + 5vw, 7rem);
+      --radius: 14px;
+      --sidebar-w: 280px;
     }
 
     html { scroll-behavior: smooth; }
@@ -45,225 +33,366 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: var(--step-0);
+      font-size: 14px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      align-items: flex-start;
+    }
 
-    /* ── Nav ── */
-    nav {
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-h);
+      border-radius: var(--radius);
+      overflow: hidden;
       position: sticky;
-      top: 0;
-      z-index: 100;
+      top: 24px;
+    }
+
+    .sidebar-top {
+      padding: 32px 24px 24px;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--bg-2);
+      border: 2px solid var(--border-h);
+      margin: 0 auto 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px var(--space-m);
-      background: rgba(13, 15, 20, 0.92);
-      backdrop-filter: blur(8px);
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--accent);
+      font-family: var(--sans);
+    }
+
+    .sidebar-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .sidebar-role {
+      display: inline-block;
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .sidebar-contacts {
+      padding: 20px 24px;
       border-bottom: 0.5px solid var(--border);
-      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
       gap: 12px;
     }
 
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: var(--step--1);
-      color: var(--accent);
-      font-weight: 500;
-      letter-spacing: 0.02em;
+    .contact-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
     }
 
-    .nav-links {
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .contact-val {
+      font-size: 12px;
+      color: var(--text-bright);
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    .contact-val a { color: var(--accent); }
+
+    .sidebar-socials {
+      padding: 16px 24px;
       display: flex;
-      gap: clamp(14px, 2vw, 32px);
-      list-style: none;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 14px;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* ── Main ── */
+    .main { flex: 1; min-width: 0; }
+
+    /* ── Tab Nav ── */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-card);
+      border: 0.5px solid var(--border-h);
+      border-radius: var(--radius);
+      padding: 6px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
-    .nav-links a {
+    .tab-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 9px 12px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
       font-family: var(--mono);
-      font-size: var(--step--1);
+      font-size: 11px;
       color: var(--text-dim);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
       text-transform: lowercase;
-      transition: color 0.15s;
     }
 
-    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+    .tab-btn:hover { background: var(--bg-2); color: var(--text); }
+    .tab-btn.active { background: var(--accent-dim); color: #fff; }
 
-    /* ── Hero ── */
-    #hero {
+    /* ── Panels ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .panel-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    /* ── About ── */
+    .about-bio {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+
+    .about-bio strong { color: var(--text); font-weight: 500; }
+
+    .what-doing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .doing-card {
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .doing-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .doing-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .doing-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* ── Resume ── */
+    .resume-section { margin-bottom: 36px; }
+
+    .resume-section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .timeline-item {
+      display: flex;
+      gap: 18px;
+      padding-bottom: 24px;
       position: relative;
-      padding: var(--space-xl) var(--space-m) var(--space-l);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 12px;
+      bottom: 0;
+      width: 0.5px;
+      background: var(--border-h);
+    }
+
+    .timeline-item:last-child::before { display: none; }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 2px solid var(--accent);
+      flex-shrink: 0;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-body { flex: 1; }
+
+    .timeline-date {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 2px;
+    }
+
+    .timeline-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* Skills */
+    .skills-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .skill-item {}
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .skill-name {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .skill-pct {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .skill-bar {
+      height: 4px;
+      background: var(--border-h);
+      border-radius: 4px;
       overflow: hidden;
     }
 
-    #neural-canvas {
-      position: absolute;
-      top: 0; right: 0;
-      width: 55%;
+    .skill-fill {
       height: 100%;
-      opacity: 0.35;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: min(580px, 100%);
-    }
-
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: var(--step--1);
-      color: var(--accent);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: var(--space-s);
-    }
-
-    h1 {
-      font-family: var(--sans);
-      font-size: var(--step-4);
-      font-weight: 600;
-      color: var(--text-bright);
-      line-height: 1.05;
-      margin-bottom: 14px;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-quote {
-      font-family: var(--mono);
-      font-size: var(--step--1);
-      color: var(--text-dim);
-      margin-bottom: var(--space-s);
-      font-style: italic;
-    }
-
-    .hero-bio {
-      font-size: var(--step-0);
-      color: var(--text-dim);
-      line-height: 1.85;
-    }
-
-    .hero-bio strong { color: var(--text); font-weight: 500; }
-
-    .cta-row {
-      display: flex;
-      gap: 12px;
-      margin-top: var(--space-m);
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
       background: var(--accent-dim);
-      color: #fff;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 6px;
-      font-family: var(--mono);
-      font-size: var(--step--1);
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      transition: background 0.15s;
-    }
-    .btn-primary:hover { background: #388bfd; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-dim);
-      border: 0.5px solid var(--border-hover);
-      padding: 10px 22px;
-      border-radius: 6px;
-      font-family: var(--mono);
-      font-size: var(--step--1);
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── Stat block ── */
-    .stat-block {
-      margin-top: var(--space-m);
-      display: flex;
-      flex-direction: column;
-      max-width: min(560px, 100%);
-      border-top: 0.5px solid var(--border);
+      border-radius: 4px;
+      transition: width 0.8s ease;
     }
 
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 10px 0;
-      border-bottom: 0.5px solid var(--border);
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      color: var(--text-dim);
-      flex-shrink: 0;
-      font-size: var(--step--1);
-      letter-spacing: 0.04em;
-    }
-
-    .stat-val {
-      color: var(--text-bright);
-      font-weight: 500;
-      text-align: right;
-      font-size: var(--step--1);
-      flex: 1;
-      min-width: 0;
-      word-break: break-word;
-    }
-
-    /* ── Sections ── */
-    section {
-      padding: var(--space-l) var(--space-m);
-      border-top: 0.5px solid var(--border);
-    }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: clamp(9px, 1vw, 11px);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: var(--space-m);
-    }
-
-    /* ── Projects ── */
-    .projects-grid {
+    /* ── Portfolio ── */
+    .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
     }
 
-    .project-card {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border-hover);
-      border-radius: 8px;
-      padding: clamp(14px, 2vw, 22px);
-      transition: border-color 0.15s, background 0.15s;
+    .portfolio-card {
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.15s;
       display: flex;
       flex-direction: column;
     }
 
-    .project-card:hover {
-      border-color: var(--accent);
-      background: var(--bg-hover);
-    }
+    .portfolio-card:hover { border-color: var(--accent); }
 
     .card-tag {
       font-family: var(--mono);
-      font-size: clamp(9px, 1vw, 10px);
+      font-size: 10px;
       color: var(--accent);
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -271,7 +400,7 @@
     }
 
     .card-title {
-      font-size: var(--step-0);
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-bright);
       margin-bottom: 8px;
@@ -279,150 +408,205 @@
     }
 
     .card-desc {
-      font-size: var(--step--1);
+      font-size: 12px;
       color: var(--text-dim);
       line-height: 1.75;
       flex: 1;
     }
 
-    .card-footer {
-      margin-top: 18px;
+    .card-pills {
+      margin-top: 14px;
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
 
     .pill {
-      background: #1a2030;
+      background: var(--bg-card);
       color: var(--text-dim);
       font-family: var(--mono);
-      font-size: clamp(9px, 1vw, 10px);
+      font-size: 10px;
       padding: 3px 9px;
       border-radius: 20px;
-      border: 0.5px solid var(--border-hover);
+      border: 0.5px solid var(--border-h);
     }
 
-    .card-links {
-      margin-top: 14px;
-      display: flex;
-      gap: 14px;
-    }
-
-    .card-links a {
+    .card-link {
+      margin-top: 12px;
       font-family: var(--mono);
-      font-size: var(--step--1);
+      font-size: 11px;
       color: var(--accent);
     }
 
     /* ── Papers ── */
-    .papers-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .papers-list { display: flex; flex-direction: column; gap: 14px; }
 
     .paper-row {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border-hover);
-      border-radius: 8px;
-      padding: clamp(14px, 2vw, 20px) clamp(14px, 2vw, 22px);
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 10px;
+      padding: 18px 20px;
       display: flex;
-      gap: 18px;
+      gap: 16px;
       align-items: flex-start;
       transition: border-color 0.15s;
     }
 
     .paper-row:hover { border-color: var(--accent); }
 
-    .paper-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .paper-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
     .paper-title {
-      font-size: var(--step-0);
+      font-size: 13px;
       font-weight: 500;
       color: var(--text-bright);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       line-height: 1.5;
     }
 
     .paper-meta {
-      font-size: var(--step--1);
-      color: var(--text-dim);
       font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
     }
 
     .paper-meta a { color: var(--accent); }
 
-    /* ── Blog ── */
-    .blog-placeholder {
-      font-size: var(--step-0);
-      color: var(--text-dim);
-      font-style: italic;
+    /* ── Contact ── */
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
     }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 0.5px solid var(--border);
-      padding: 28px var(--space-m);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
+    .contact-info-card {
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 10px;
+      padding: 16px 18px;
     }
 
-    .footer-note {
+    .contact-info-label {
       font-family: var(--mono);
-      font-size: var(--step--1);
-      color: #484f58;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
+    .contact-info-val {
+      font-size: 13px;
+      color: var(--text-bright);
+      font-weight: 500;
     }
 
-    .footer-links a {
-      font-family: var(--mono);
-      font-size: var(--step--1);
+    .contact-info-val a { color: var(--accent); }
+
+    .contact-note {
+      font-size: 13px;
       color: var(--text-dim);
-      transition: color 0.15s;
+      line-height: 1.8;
+      background: var(--bg-2);
+      border: 0.5px solid var(--border-h);
+      border-radius: 10px;
+      padding: 20px;
     }
 
-    .footer-links a:hover { color: var(--accent); text-decoration: none; }
+    /* ── Neural canvas ── */
+    #neural-canvas {
+      position: fixed;
+      top: 0; right: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .layout { position: relative; z-index: 1; }
 
     /* ── Responsive ── */
-    @media (max-width: 500px) {
+    @media (max-width: 768px) {
+      .layout { flex-direction: column; padding: 16px; }
+      .sidebar { width: 100%; position: static; }
       #neural-canvas { display: none; }
-      .stat-row { flex-direction: column; gap: 4px; }
-      .stat-val { text-align: left; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <span class="nav-logo">jkhattak.github.io</span>
-    <ul class="nav-links">
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#papers">papers</a></li>
-      <li><a href="#blog">blog</a></li>
-      <li><a href="https://github.com/jkhattak" target="_blank" rel="noopener">github</a></li>
-    </ul>
-  </nav>
+<canvas id="neural-canvas"></canvas>
 
-  <!-- Hero -->
-  <section id="hero" style="border-top: none;">
-    <canvas id="neural-canvas"></canvas>
-    <div class="hero-content">
-      <div class="eyebrow">// data analyst &middot; omscs &middot; ml</div>
-      <h1>Jawad Khattak</h1>
-      <p class="hero-quote">"All models are wrong, but some are useful." &mdash; George Box</p>
-      <p class="hero-bio">
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="avatar">JK</div>
+      <div class="sidebar-name">Jawad Khattak</div>
+      <span class="sidebar-role">data analyst &middot; ml</span>
+    </div>
+
+    <div class="sidebar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">email</div>
+          <div class="contact-val"><a href="mailto:you@email.com">you@email.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">location</div>
+          <div class="contact-val">Fairfax, VA</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🎓</div>
+        <div>
+          <div class="contact-label">education</div>
+          <div class="contact-val">Georgia Tech &middot; OMSCS</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">company</div>
+          <div class="contact-val">Public Interest Registry</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-socials">
+      <a href="https://github.com/jkhattak" target="_blank" rel="noopener" class="social-btn" title="GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/jkhattak" target="_blank" rel="noopener" class="social-btn" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Tab Nav -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="showTab('about', this)">about</button>
+      <button class="tab-btn" onclick="showTab('resume', this)">resume</button>
+      <button class="tab-btn" onclick="showTab('portfolio', this)">projects</button>
+      <button class="tab-btn" onclick="showTab('papers', this)">papers</button>
+      <button class="tab-btn" onclick="showTab('contact', this)">contact</button>
+    </nav>
+
+    <!-- About -->
+    <div id="panel-about" class="panel active">
+      <h2 class="panel-title">About Me</h2>
+
+      <p class="about-bio">
         I'm a data analyst at <strong>Public Interest Registry</strong>, the nonprofit behind .org.
         My work tends to span well beyond the title. I've built and deployed a domain renewal
         prediction model using XGBoost that runs on a monthly production cadence, built a nonprofit
@@ -432,287 +616,324 @@
         <strong>MS in Computer Science at Georgia Tech</strong>, concentrating in machine learning.
       </p>
 
-      <div class="cta-row">
-        <a href="#projects"><button class="btn-primary">view projects</button></a>
-        <a href="https://github.com/jkhattak" target="_blank" rel="noopener"><button class="btn-ghost">github &rarr;</button></a>
-      </div>
-
-      <div class="stat-block">
-        <div class="stat-row">
-          <span class="stat-label">location</span>
-          <span class="stat-val">Fairfax, VA</span>
+      <div class="what-doing-grid">
+        <div class="doing-card">
+          <div class="doing-icon">🤖</div>
+          <div class="doing-title">Machine Learning</div>
+          <div class="doing-desc">Building and deploying production ML models — from XGBoost pipelines to deep learning classifiers.</div>
         </div>
-        <div class="stat-row">
-          <span class="stat-label">experience</span>
-          <span class="stat-val">Public Interest Registry &middot; 3 yrs (intern &rarr; full-time)</span>
+        <div class="doing-card">
+          <div class="doing-icon">🗄️</div>
+          <div class="doing-title">Data Engineering</div>
+          <div class="doing-desc">Snowflake pipelines, AWS Lambda functions, streams, and end-to-end data infrastructure.</div>
         </div>
-        <div class="stat-row">
-          <span class="stat-label">graduate degree</span>
-          <span class="stat-val">M.S. Computer Science, Georgia Tech</span>
+        <div class="doing-card">
+          <div class="doing-icon">📊</div>
+          <div class="doing-title">Analytics</div>
+          <div class="doing-desc">Turning raw domain and nonprofit data into insights and dashboards that drive business decisions.</div>
         </div>
-        <div class="stat-row">
-          <span class="stat-label">undergraduate degree</span>
-          <span class="stat-val">B.S. Computational Data Science &amp; Neuroscience, George Mason</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">programming languages</span>
-          <span class="stat-val">Python &middot; SQL &middot; Bash</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">ai (ml, dl, nlp) stack</span>
-          <span class="stat-val">PyTorch &middot; scikit-learn &middot; Pandas &middot; NumPy</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">infra</span>
-          <span class="stat-val">Snowflake &middot; AWS Lambda &middot; AWS EventBridge</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">visualization</span>
-          <span class="stat-val">Tableau &middot; Matplotlib &middot; Seaborn</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">active project</span>
-          <span class="stat-val">Brain Tumor MRI Classifier</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">currently exploring</span>
-          <span class="stat-val">Deep Learning &middot; Algorithms &middot; MCP</span>
+        <div class="doing-card">
+          <div class="doing-icon">🔬</div>
+          <div class="doing-title">Research & Study</div>
+          <div class="doing-desc">OMSCS coursework in ML, NLP, Bayesian Stats, and Cognitive Science. Currently studying algorithms.</div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <div class="section-label">// projects</div>
-    <div class="projects-grid">
+    <!-- Resume -->
+    <div id="panel-resume" class="panel">
+      <h2 class="panel-title">Resume</h2>
 
-      <div class="project-card">
-        <div class="card-tag">ml &middot; production</div>
-        <div class="card-title">Domain Renewal Prediction</div>
-        <div class="card-desc">
-          End-to-end XGBoost pipeline: Snowflake cohort extraction, behavioral
-          feature engineering with percentile-based segmentation, risk tier
-          scoring, and Snowflake writebacks. Runs on a monthly production cadence.
-          0.91 out-of-sample AUC.
-        </div>
-        <div class="card-footer">
-          <span class="pill">xgboost</span>
-          <span class="pill">snowflake</span>
-          <span class="pill">aws lambda</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
+      <div class="resume-section">
+        <div class="resume-section-title">// experience</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-date">Sep 2023 &mdash; Present</div>
+              <div class="timeline-title">Data Analyst</div>
+              <div class="timeline-sub">Public Interest Registry &middot; Full-time &middot; Fairfax, VA</div>
+              <div class="timeline-desc">Building production ML models, Snowflake data pipelines, AWS Lambda functions, and behavioral segmentation systems for the nonprofit behind .org.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-date">May 2023 &mdash; Aug 2023</div>
+              <div class="timeline-title">Data Analyst Intern</div>
+              <div class="timeline-sub">Public Interest Registry &middot; Internship &middot; Reston, VA</div>
+              <div class="timeline-desc">Worked on a machine learning project to predict first-year domain renewal using SQL and Python.</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="project-card">
-        <div class="card-tag">data engineering</div>
-        <div class="card-title">Nonprofit Sector Database</div>
-        <div class="card-desc">
-          Built a unified nonprofit database from scratch using Lambda functions,
-          web scraping, and Snowflake pipelines. Joined against internal data to
-          map how .org contributes to nonprofit growth across the US and UK.
-        </div>
-        <div class="card-footer">
-          <span class="pill">snowflake</span>
-          <span class="pill">aws lambda</span>
-          <span class="pill">python</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-tag">computer vision</div>
-        <div class="card-title">Brain Tumor MRI Classifier</div>
-        <div class="card-desc">
-          4-class CNN distinguishing glioma, meningioma, pituitary tumor, and
-          no-tumor from MRI scans on Kaggle. Class-weighted cross-entropy loss
-          handles dataset imbalance.
-        </div>
-        <div class="card-footer">
-          <span class="pill">pytorch</span>
-          <span class="pill">cnn</span>
-          <span class="pill">kaggle</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
+      <div class="resume-section">
+        <div class="resume-section-title">// education</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-date">Jan 2025 &mdash; Dec 2027</div>
+              <div class="timeline-title">M.S. Computer Science</div>
+              <div class="timeline-sub">Georgia Institute of Technology &middot; Concentration: Machine Learning</div>
+              <div class="timeline-desc">Courses: Machine Learning, NLP, Bayesian Statistics, Cognitive Science, Graduate Algorithms (upcoming).</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-date">Sep 2019 &mdash; May 2023</div>
+              <div class="timeline-title">B.S. Computational Data Science &amp; Neuroscience</div>
+              <div class="timeline-sub">George Mason University &middot; Double Major</div>
+              <div class="timeline-desc">Activities: Data Science and Computation Society, Inventors and Innovations, American Statistical Association, Chess Club.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-date">Aug 2017 &mdash; Jul 2019</div>
+              <div class="timeline-title">Associate's Degree, Science</div>
+              <div class="timeline-sub">Northern Virginia Community College</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="project-card">
-        <div class="card-tag">ai tooling &middot; in progress</div>
-        <div class="card-title">Claude MCP for Tableau</div>
-        <div class="card-desc">
-          Building an MCP integration that lets a Claude AI agent interact
-          directly with Tableau dashboards, enabling natural language querying
-          of business data.
-        </div>
-        <div class="card-footer">
-          <span class="pill">mcp</span>
-          <span class="pill">tableau</span>
-          <span class="pill">python</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-tag">nlp</div>
-        <div class="card-title">Key-Value Memory Network</div>
-        <div class="card-desc">
-          KVMemNet implementation in PyTorch from CS 7650 (NLP). Attention
-          over a key-value memory store for question answering tasks.
-        </div>
-        <div class="card-footer">
-          <span class="pill">pytorch</span>
-          <span class="pill">nlp</span>
-          <span class="pill">attention</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
+      <div class="resume-section">
+        <div class="resume-section-title">// skills</div>
+        <div class="skills-list">
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Python</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">SQL / Snowflake</span><span class="skill-pct">90%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Machine Learning (XGBoost, scikit-learn)</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Deep Learning / PyTorch</span><span class="skill-pct">70%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">AWS (Lambda, EventBridge)</span><span class="skill-pct">75%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header"><span class="skill-name">Tableau / Data Visualization</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
         </div>
       </div>
-
-      <div class="project-card">
-        <div class="card-tag">bayesian stats</div>
-        <div class="card-title">Developer Burnout Prediction</div>
-        <div class="card-desc">
-          Bayesian ordinal logistic regression model for predicting developer
-          burnout levels. Implemented in PyMC with ArviZ for posterior
-          diagnostics and convergence checks.
-        </div>
-        <div class="card-footer">
-          <span class="pill">pymc</span>
-          <span class="pill">arviz</span>
-          <span class="pill">bayesian</span>
-        </div>
-        <div class="card-links">
-          <a href="#">github &rarr;</a>
-        </div>
-      </div>
-
     </div>
-  </section>
 
-  <!-- Papers -->
-  <section id="papers">
-    <div class="section-label">// omscs papers</div>
-    <div class="papers-list">
+    <!-- Portfolio -->
+    <div id="panel-portfolio" class="panel">
+      <h2 class="panel-title">Projects</h2>
+      <div class="portfolio-grid">
 
-      <div class="paper-row">
-        <span class="paper-icon">&#128196;</span>
-        <div>
-          <div class="paper-title">The Cognitive Offloading Paradox: Generative AI's Impact on Creativity and Critical Thinking</div>
-          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; Literature Review &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        <div class="portfolio-card">
+          <div class="card-tag">ml &middot; production</div>
+          <div class="card-title">Domain Renewal Prediction</div>
+          <div class="card-desc">End-to-end XGBoost pipeline with Snowflake cohort extraction, behavioral feature engineering, risk tier scoring, and monthly production cadence. 0.91 out-of-sample AUC.</div>
+          <div class="card-pills">
+            <span class="pill">xgboost</span><span class="pill">snowflake</span><span class="pill">aws lambda</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
         </div>
-      </div>
 
-      <div class="paper-row">
-        <span class="paper-icon">&#128196;</span>
-        <div>
-          <div class="paper-title">LLMs Through a Cognitive Science Framework</div>
-          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        <div class="portfolio-card">
+          <div class="card-tag">data engineering</div>
+          <div class="card-title">Nonprofit Sector Database</div>
+          <div class="card-desc">Unified nonprofit database built from scratch using Lambda functions, web scraping, and Snowflake pipelines to map how .org contributes to nonprofit growth across the US and UK.</div>
+          <div class="card-pills">
+            <span class="pill">snowflake</span><span class="pill">aws lambda</span><span class="pill">python</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
         </div>
-      </div>
 
-      <div class="paper-row">
-        <span class="paper-icon">&#128196;</span>
-        <div>
-          <div class="paper-title">Distributed Cognition and Brain-Computer Interfaces</div>
-          <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        <div class="portfolio-card">
+          <div class="card-tag">computer vision</div>
+          <div class="card-title">Brain Tumor MRI Classifier</div>
+          <div class="card-desc">4-class CNN distinguishing glioma, meningioma, pituitary tumor, and no-tumor from MRI scans on Kaggle. Class-weighted cross-entropy loss handles dataset imbalance.</div>
+          <div class="card-pills">
+            <span class="pill">pytorch</span><span class="pill">cnn</span><span class="pill">kaggle</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
         </div>
-      </div>
 
-      <div class="paper-row">
-        <span class="paper-icon">&#128196;</span>
-        <div>
-          <div class="paper-title">Poisson-Gamma Model for World Cup Goal Scoring</div>
-          <div class="paper-meta">ISyE 6420 &middot; Bayesian Statistics &middot; 2026 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+        <div class="portfolio-card">
+          <div class="card-tag">ai tooling &middot; in progress</div>
+          <div class="card-title">Claude MCP for Tableau</div>
+          <div class="card-desc">MCP integration that lets a Claude AI agent interact directly with Tableau dashboards, enabling natural language querying of business data.</div>
+          <div class="card-pills">
+            <span class="pill">mcp</span><span class="pill">tableau</span><span class="pill">python</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
         </div>
-      </div>
 
+        <div class="portfolio-card">
+          <div class="card-tag">nlp</div>
+          <div class="card-title">Key-Value Memory Network</div>
+          <div class="card-desc">KVMemNet implementation in PyTorch from CS 7650 (NLP). Attention over a key-value memory store for question answering tasks.</div>
+          <div class="card-pills">
+            <span class="pill">pytorch</span><span class="pill">nlp</span><span class="pill">attention</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
+        </div>
+
+        <div class="portfolio-card">
+          <div class="card-tag">bayesian stats</div>
+          <div class="card-title">Developer Burnout Prediction</div>
+          <div class="card-desc">Bayesian ordinal logistic regression model for predicting developer burnout levels, implemented in PyMC with ArviZ for posterior diagnostics.</div>
+          <div class="card-pills">
+            <span class="pill">pymc</span><span class="pill">arviz</span><span class="pill">bayesian</span>
+          </div>
+          <a class="card-link" href="#">github &rarr;</a>
+        </div>
+
+      </div>
     </div>
-  </section>
 
-  <!-- Blog -->
-  <section id="blog">
-    <div class="section-label">// blog</div>
-    <p class="blog-placeholder">Posts coming soon. Writing about ML in production, algorithms, and OMSCS.</p>
-  </section>
+    <!-- Papers -->
+    <div id="panel-papers" class="panel">
+      <h2 class="panel-title">OMSCS Papers</h2>
+      <div class="papers-list">
 
-  <!-- Footer -->
-  <footer>
-    <span class="footer-note">jkhattak.github.io &middot; built with html and css</span>
-    <div class="footer-links">
-      <a href="https://github.com/jkhattak" target="_blank" rel="noopener">github</a>
-      <a href="https://linkedin.com/in/jkhattak" target="_blank" rel="noopener">linkedin</a>
-      <a href="mailto:you@email.com">email</a>
+        <div class="paper-row">
+          <span class="paper-icon">📄</span>
+          <div>
+            <div class="paper-title">The Cognitive Offloading Paradox: Generative AI's Impact on Creativity and Critical Thinking</div>
+            <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; Literature Review &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+          </div>
+        </div>
+
+        <div class="paper-row">
+          <span class="paper-icon">📄</span>
+          <div>
+            <div class="paper-title">LLMs Through a Cognitive Science Framework</div>
+            <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+          </div>
+        </div>
+
+        <div class="paper-row">
+          <span class="paper-icon">📄</span>
+          <div>
+            <div class="paper-title">Distributed Cognition and Brain-Computer Interfaces</div>
+            <div class="paper-meta">CS 6795 &middot; Cognitive Science &middot; 2025 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+          </div>
+        </div>
+
+        <div class="paper-row">
+          <span class="paper-icon">📄</span>
+          <div>
+            <div class="paper-title">Poisson-Gamma Model for World Cup Goal Scoring</div>
+            <div class="paper-meta">ISyE 6420 &middot; Bayesian Statistics &middot; 2026 &nbsp;&middot;&nbsp; <a href="#">pdf &rarr;</a></div>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </footer>
 
-  <script>
-    const canvas = document.getElementById('neural-canvas');
-    const ctx = canvas.getContext('2d');
-    let nodes = [], W, H;
+    <!-- Contact -->
+    <div id="panel-contact" class="panel">
+      <h2 class="panel-title">Contact</h2>
 
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      nodes = [];
-      const count = 28;
-      for (let i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 2.5 + 1.5,
-          pulse: Math.random() * Math.PI * 2
-        });
-      }
-    }
+      <div class="contact-info-grid">
+        <div class="contact-info-card">
+          <div class="contact-info-label">email</div>
+          <div class="contact-info-val"><a href="mailto:you@email.com">you@email.com</a></div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-info-label">location</div>
+          <div class="contact-info-val">Fairfax, VA</div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-info-label">github</div>
+          <div class="contact-info-val"><a href="https://github.com/jkhattak" target="_blank">github.com/jkhattak</a></div>
+        </div>
+        <div class="contact-info-card">
+          <div class="contact-info-label">linkedin</div>
+          <div class="contact-info-val"><a href="https://linkedin.com/in/jkhattak" target="_blank">linkedin.com/in/jkhattak</a></div>
+        </div>
+      </div>
 
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      nodes.forEach(n => {
-        n.x += n.vx; n.y += n.vy; n.pulse += 0.018;
-        if (n.x < 0 || n.x > W) n.vx *= -1;
-        if (n.y < 0 || n.y > H) n.vy *= -1;
+      <div class="contact-note">
+        Feel free to reach out about data, ML, or anything OMSCS-related. I'm always happy to connect with people working on interesting problems.
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function showTab(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Neural network background
+  const canvas = document.getElementById('neural-canvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [], W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    nodes = [];
+    for (let i = 0; i < 40; i++) {
+      nodes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 2 + 1,
+        pulse: Math.random() * Math.PI * 2
       });
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 160) {
-            const alpha = (1 - dist / 160) * 0.45;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(88,166,255,${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy; n.pulse += 0.015;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 180) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(88,166,255,${(1 - dist/180) * 0.6})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
         }
       }
-      nodes.forEach(n => {
-        const glow = 0.7 + 0.3 * Math.sin(n.pulse);
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r * glow, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(88,166,255,${0.6 * glow})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
     }
+    nodes.forEach(n => {
+      const g = 0.7 + 0.3 * Math.sin(n.pulse);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * g, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(88,166,255,${0.7 * g})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
 
-    window.addEventListener('resize', resize);
-    resize();
-    draw();
-  </script>
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+</script>
 
 </body>
 </html>
